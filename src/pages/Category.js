@@ -298,7 +298,7 @@ const Category = () => {
                     <Dialog visible={deleteCategoriesDialog} style={{ width: '450px' }} header="Confirm" modal footer={deletecategoriesDialogFooter} onHide={hideDeleteProductsDialog}>
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && <span>Are you sure you want to delete the selected products?</span>}
+                            {category && <span>Are you sure you want to delete the selected products?</span>}
                         </div>
                     </Dialog>
                 </div>
