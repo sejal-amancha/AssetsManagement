@@ -10,9 +10,6 @@ import { adminChangePasswordStart } from '../redux/Actions/actions';
 
 const ChangePassword = () => {
 
-    const [currentPassError, setCurrentPassError] = useState(null);
-    const [newPassError, setnewPassError] = useState(null);
-    const [confirmPassError, setConfirmPassError] = useState(null);
     const [submitted, setSubmitted] = useState(false)
     const dispatch = useDispatch();
 
@@ -34,27 +31,6 @@ const ChangePassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitted(true);
-
-        // if(data.currentPassword === '') {
-        //     setCurrentPassError('You have to Provide Current Password!')
-        // } else {
-        //     setCurrentPassError('')
-        // }
-
-        // if(data.newPassword === '') {
-        //     setnewPassError('Enter Your New Password...')
-        // } else {
-        //     setnewPassError('')
-        // }
-
-        // if(data.confirmPassword === '') {
-        //     setConfirmPassError('Confirm Password can not be empty!')
-        // } else if(data.newPassword !== data.confirmPassword) {
-        //     setConfirmPassError('New Password and Confirm Password must be match!')
-        // } else {
-        //     setConfirmPassError('')
-        // }
-
         const adminChangePass = {
             currentPassword: data.currentPassword,
             newPassword: data.newPassword,
@@ -78,10 +54,11 @@ const ChangePassword = () => {
         }}>
 
         <Paper elevation={5}> 
-            <img src='assets/layout/images/logo-dark.svg'  alt="logo" style={{ marginLeft:'245px', marginTop: '20px' }}/>
+            <img src='assets/layout/images/logo-dark.svg'  alt="logo" style={{ marginLeft:'245px', marginTop: '20px'}}/>
 
             <form onSubmit={handleSubmit} style={container}>
                         <div>
+                        <label htmlFor="name">Enter Current Password</label>
                             <InputText
                                 style={textInputs}
                                 className={classNames({ 'p-invalid': submitted && !data.currentPassword})}
@@ -94,8 +71,9 @@ const ChangePassword = () => {
                             />
                             {submitted && !data.currentPassword && <small className="p-invalid">Current Password is required.</small>}
                         </div>
-
+                        <br/>
                         <div>
+                            <label htmlFor="name">New Password</label>
                             <InputText
                                 className={classNames({ 'p-invalid': submitted && !data.newPassword})}
                                 style={textInputs}
@@ -108,8 +86,9 @@ const ChangePassword = () => {
                             />
                         </div>
                         {submitted && !data.newPassword && <small className="p-invalid">New Password Please!.</small>}
-
+                        <br/>
                         <div>
+                            <label htmlFor="name">Re-enter Password</label>
                             <InputText
                                 className={classNames({ 'p-invalid': submitted && !data.confirmPassword})}
                                 style={textInputs}
@@ -122,6 +101,7 @@ const ChangePassword = () => {
                             />
                             {submitted && !data.confirmPassword && <small className="p-invalid">Confirm Password is required.</small>}
                         </div>
+                        <br/>
                         <div>
                             <Button variant="contained" size="large" style={textInputs} type="submit" >
                                 Login with New Password
@@ -150,11 +130,13 @@ const divStyle = {
 
 const textInputs = {
     width: "97%",
+    height:'100%',
     margin: "8px",
-    marginTop: '30px'
 };
 
 const container = {
     justifyContent: "center",
     alignItems: "center",
+    padding: '8px',
+    margin: '8px'
 };

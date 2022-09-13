@@ -1,37 +1,39 @@
 import React, { useState, useEffect, useRef }  from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import {  loadProductsStart } from '../redux/Actions/productActions';
-import {  loadAllocationStart } from '../redux/Actions/allocationActions';
-import { loadComboStart, createComboStart, updateComboStart, deleteComboStart, getcomboByIdStart } from '../redux/Actions/comboActions';
+import { useHistory } from "react-router-dom";
+import {  loadProductsStart } from '../../redux/Actions/productActions';
+import {  loadAllocationStart } from '../../redux/Actions/allocationActions';
+import { loadComboStart, createComboStart, updateComboStart, deleteComboStart, getcomboByIdStart } from '../../redux/Actions/comboActions';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
-import { FileUpload } from 'primereact/fileupload';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
+import { Link } from "react-router-dom";
 
 
-const Combo = () => {
+const Combos = () => {
 
     let initialCombo = {
         allocation_id: '',
         product_id: '',
+        product_name: '',
+        combo_id:'',
     }
     const dt = useRef(null);
-    const toast = useRef(null);
     const dispatch = useDispatch();
+    const history = useHistory();
     const [globalFilter, setGlobalFilter] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [dialogBox, setDialogBox] = useState(false);
-    const [singleCombo, setSingleCombo] = useState(false);
+
     const [combo, setCombo] = useState(initialCombo);
 
     const productss = useSelector((state) => state.product.productss.rows);
     const allocationss = useSelector((state) => state.allocation.allocations.rows);
     const combos = useSelector((state) => state.combo.combos.rows);
-    const getSinglecombodetails = useSelector((state) => state.comboDetails.comboDetails);
 
     useEffect(() => {
         dispatch(loadAllocationStart());
@@ -59,18 +61,17 @@ const Combo = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <Button label="New" icon="pi pi-plus" className="p-button-success mr-2"  onClick={openNew}/>
-                    <Button label="Delete" icon="pi pi-trash" className="p-button-danger"   />
+                    <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
                 </div>
             </React.Fragment>
         )
     }
-
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment>
-                <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} label="Import" chooseLabel="Import" className="mr-2 inline-block" />
-                <Button label="Export" icon="pi pi-upload" className="p-button-help"  />
+                <div className="my-2">
+                    <Button label="Back" icon="pi pi-angle-left" className="p-button-secondary mr-2" onClick={gotoPrevious} />
+                </div>
             </React.Fragment>
         )
     }
@@ -79,6 +80,9 @@ const Combo = () => {
         setProductDialog(true);
         setDialogBox(true);
     }
+    const gotoPrevious = () => {
+        history.goBack();
+    }
 
     const hideDialog = () => {
         setProductDialog(false);    
@@ -86,10 +90,6 @@ const Combo = () => {
 
     const hideDeleteProductDialog = () => {
         setDeleteProductDialog(false);
-    }
-
-    const hideSingleCombo = () => {
-        setSingleCombo(false);
     }
 
     const deleteSelectedComboDialog = () => {
@@ -117,12 +117,6 @@ const Combo = () => {
         setDialogBox(false);
     }
 
-    const getSingleCombo = (combo) => {
-        setCombo({...combo});
-        dispatch(getcomboByIdStart(combo));
-        setSingleCombo(true);
-    }
-
     const deleteCombo = (combo) => {
         setCombo(combo);
         setDeleteProductDialog(true);  
@@ -148,17 +142,14 @@ const Combo = () => {
         </>
     );
 
-    const comboDialogFooter = (
-        <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideSingleCombo} />
-        </>
-    )
 
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="actions">
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editCombo(rowData)}/>  
-                <Button icon="pi pi-search" className="p-button-rounded p-button-info mr-2" onClick={() => getSingleCombo(rowData)} />
+                <Link to={`/combo/${rowData.id}`}>
+                    <Button icon="pi pi-info-circle" className="p-button-rounded p-button-info mr-2"  />
+                </Link>
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-danger mt-2" onClick={() => deleteCombo(rowData)} />
             </div>
         );
@@ -177,7 +168,7 @@ const Combo = () => {
         return (
             <>
                 <span className="p-column-title">ProductId</span>
-                {rowData.product_id}
+                {/* {rowData.ProductDetail.product_name} */}
             </>
         );
     };
@@ -201,7 +192,7 @@ const Combo = () => {
     return (
         <div className="grid">
         <div className="col-12">
-            <div className="card">
+            <div className="card" style={{ margin: '1%'}}>
                  <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                  <DataTable ref={dt} 
@@ -210,9 +201,8 @@ const Combo = () => {
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                         globalFilter={globalFilter} emptyMessage="No Combo Created found." header={header} responsiveLayout="scroll">
 
-                        <Column selectionMode="multiple" headerStyle={{ width: '3rem'}}></Column>
-                        <Column field="id" header="Combo ID" body={comboIdTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="product_id" header="product ID" body={productIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="id" header="ID" body={comboIdTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="product_name" header="product Name" body={productIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="allocation_id" header="Allocation Id" body={allocationIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable> 
@@ -224,6 +214,7 @@ const Combo = () => {
                             <select 
                                     name='allocation_id'
                                     id='allocation_id'  
+                                    value={combo.allocation_id}
                                     onChange={(e) => onInputChange(e , 'allocation_id')} 
                                     style={{ height:'100%', width:'100%', padding:'4%', margin:'1%', border:'1px solid #cccccc', borderRadius:'5px'}}>       
                             {
@@ -237,7 +228,9 @@ const Combo = () => {
                                         </option>
                                     )) : null
                             }
-                   </select>
+                            </select>
+
+                
                         </div> 
 
                         <div className="field col">  
@@ -245,6 +238,7 @@ const Combo = () => {
                             <select 
                                     name='product_id'
                                     id='product_id'  
+                                    value={combo.product_id}
                                     onChange={(e) => onInputChange(e , 'product_id')} 
                                     style={{ height:'100%', width:'100%', padding:'4%', margin:'1%', border:'1px solid #cccccc', borderRadius:'5px'}}>       
                             {
@@ -263,7 +257,7 @@ const Combo = () => {
                     </div>
                     </Dialog>  
 
-                    <Dialog visible={singleCombo} style={{ width: "450px" }} header="User Details" modal className="p-fluid" footer={comboDialogFooter} onHide={hideSingleCombo} >
+                    {/* <Dialog visible={singleCombo} style={{ width: "450px" }} header="User Details" modal className="p-fluid" footer={comboDialogFooter} onHide={hideSingleCombo} >
                         <table>
                             <tr>
                                 <td> <div className="field">
@@ -306,7 +300,7 @@ const Combo = () => {
                                     </div> </td>
                             </tr>
                         </table>
-                    </Dialog>
+                    </Dialog> */}
 
 
                     <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteComboDialogFooter} onHide={hideDeleteProductDialog}>
@@ -325,4 +319,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(Combo, comparisonFn);
+export default React.memo(Combos, comparisonFn);

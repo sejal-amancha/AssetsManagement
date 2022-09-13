@@ -23,16 +23,24 @@ export const AppTopbar = (props) => {
 
     const history = useHistory();
 
+
+    const handleChange = async (e) => {
+        e.preventDefault();
+        setAnchorEl(null);
+        history.push("/changePass");
+    }
+
     const handleUserLogOut = async (e) => {
         e.preventDefault();
         setAnchorEl(null);
-        dispatch(adminLogoutStart());
-        history.push("/");
+        
+        localStorage.removeItem("ADMIN");
+        history.push("/login");
     }
 
     return (
         <div className="layout-topbar">
-            <Link to="/" className="layout-topbar-logo">
+            <Link to='/' className="layout-topbar-logo">
                 <img src={props.layoutColorMode === 'light' ? 'assets/layout/images/logo-dark.svg' : 'assets/layout/images/logo-white.svg'} alt="logo"/>
                 <span>AMS</span>
             </Link>
@@ -73,7 +81,7 @@ export const AppTopbar = (props) => {
                                 TransitionComponent={Fade}
                                  >
                                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={() => history.push('/changePass')}>Change Password</MenuItem>
+                                <MenuItem onClick={handleChange}> Change Password</MenuItem>
                                 <MenuItem onClick={handleUserLogOut}>Logout</MenuItem>
                             </Menu>
                     </li>

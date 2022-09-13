@@ -5,8 +5,9 @@ export const adminLoginStart = (user) => ({
     payload: user,
 });
 
-export const adminLoginSuccess = () => ({
+export const adminLoginSuccess = (login) => ({
     type: types.ADMIN_LOGIN_SUCCESS,
+    payload: login,
 });
 
 export const adminLoginError = (error) => ({
@@ -81,6 +82,21 @@ export const updateEmployeeError = (error) => ({
     type: types.UPDATE_EMPLOYEE_ERROR,
     payload: error,
 });
+
+export const getSingleEmployeeStart = (singleEmployee) => ({
+    type: types.GET_SINGLE_EMPLOYEE_START,
+    payload: singleEmployee,
+});
+
+export const getSingleEmployeeSuccess = (singleEmployee) => ({
+    type: types.GET_SINGLE_EMPLOYEE_SUCCESS,
+    payload: singleEmployee,  
+});
+
+export const getSingleEmployeeError = (error) => ({
+    type: types.GET_SINGLE_EMPLOYEE_ERROR,
+    payload: error,
+})
 
 export const deleteEmployeeStart = (employeeId) => ({
     type: types.DELETE_EMPLOYEE_START,

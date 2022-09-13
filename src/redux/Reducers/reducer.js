@@ -1,7 +1,9 @@
 import * as types from '../ActionTypes/actionTypes';
 
 const initialState = {
+    loginData: [],
     users: [],
+    singleUser: [],
     loading: false,
 }
 
@@ -14,6 +16,7 @@ const usersReducer = ( state = initialState, action ) => {
         case types.ADD_NEW_EMPLOYEE_START:
         case types.UPDATE_EMPLOYEE_START:
         case types.DELETE_EMPLOYEE_START:
+        case types.GET_SINGLE_EMPLOYEE_START:
             return {
                 ...state,
                 loading: true,
@@ -25,6 +28,17 @@ const usersReducer = ( state = initialState, action ) => {
                   users: action.payload,
                 };
         case types.ADMIN_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: true,   
+                loginData: action.payload,
+            };
+        case types.GET_SINGLE_EMPLOYEE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                singleUser: action.payload,
+            }
         case types.ADMIN_CHANGE_PASSWORD_SUCCESS:
         case types.ADMIN_LOGOUT_SUCCESS:
         case types.ADD_NEW_EMPLOYEE_SUCCESS:
@@ -41,6 +55,7 @@ const usersReducer = ( state = initialState, action ) => {
         case types.ADD_NEW_EMPLOYEE_ERROR:
         case types.UPDATE_EMPLOYEE_ERROR:
         case types.DELETE_EMPLOYEE_ERROR:
+        case types.GET_SINGLE_EMPLOYEE_ERROR:
             return {
                 ...state,
                 loading: false,

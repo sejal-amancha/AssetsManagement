@@ -6,7 +6,7 @@ const initialState = {
     loading: false,   
 }
 
-const comboReducer = (state = initialState, action ) => {
+ const comboReducer = (state = initialState, action ) => {
     switch (action.type) {
         case types.LOAD_COMBO_START:
         case types.CREATE_COMBO_START:

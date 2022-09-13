@@ -15,7 +15,7 @@ export const updateComboApi = async (comboData) =>
             await axios.patch(`http://localhost:9091/api/combo/${comboData.id}`, comboData, { headers : headersParam });
 
 export const getSingleComboApi = async (comboData) => 
-            await axios.get(`http://localhost:9091/api/combo/${comboData.id}`, { headers : headersParam });
+            await axios.get(`http://localhost:9091/api/combo/${comboData}`, { headers : headersParam });
 
 export const deleteComboApi = async (comboData) => 
             await axios.delete(`http://localhost:9091/api/combo/${comboData.id}`, { headers: headersParam });

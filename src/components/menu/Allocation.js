@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import {  loadAllocationStart, newAllocationStart, updateAllocationStart, deleteAllocationStart } from '../redux/Actions/allocationActions';
-import { FileUpload } from 'primereact/fileupload';
-import { loadUsersStart } from '../redux/Actions/actions';
+import {  loadAllocationStart, newAllocationStart, updateAllocationStart, deleteAllocationStart } from '../../redux/Actions/allocationActions';
+import { loadUsersStart } from '../../redux/Actions/actions';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
+import { useHistory } from "react-router-dom";
 
 const Allocation = () => {
     let newAllocationID = {
         employee_id: ''
     }
+    const history = useHistory();
       
     const dt = useRef(null);
     const dispatch = useDispatch();
@@ -90,16 +91,29 @@ const Allocation = () => {
         setDialogBox(true);
     }
 
+    const gotoPrevious = () => {
+        history.goBack();
+    }
+
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
                     <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                    <Button label="Delete" icon="pi pi-trash" className="p-button-danger"   />
                 </div>
             </React.Fragment>
         )
     }
+    const rightToolbarTemplate = () => {
+        return (
+            <React.Fragment>
+                <div className="my-2">
+                    <Button label="Back" icon="pi pi-angle-left" className="p-button-secondary mr-2" onClick={gotoPrevious} />
+                </div>
+            </React.Fragment>
+        )
+    }
+
     const hideDialog = () => {
         setProductDialog(false);    
     }
@@ -134,15 +148,6 @@ const Allocation = () => {
             <Button label="Update" icon="pi pi-check" className="p-button-text" onClick={updateAllocation} />
         </>
     )
-
-    const rightToolbarTemplate = () => {
-        return (
-            <React.Fragment>
-                <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} label="Import" chooseLabel="Import" className="mr-2 inline-block" />
-                <Button label="Export" icon="pi pi-upload" className="p-button-help"  />
-            </React.Fragment>
-        )
-    }
 
     const comboIdTemplate = (rowData) => {
         return (
@@ -201,7 +206,7 @@ const Allocation = () => {
     return (
         <div className="grid">
             <div className="col-12">
-                <div className="card">
+                <div className="card" style={{ margin: '1%'}}>
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                     <DataTable ref={dt} 
@@ -210,7 +215,7 @@ const Allocation = () => {
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                         globalFilter={globalFilter} emptyMessage="No Allocations found." header={header} responsiveLayout="scroll">
 
-                        <Column selectionMode="multiple" headerStyle={{ width: '3rem'}}></Column>
+
                         <Column field="combo_id" header="Combo ID" body={comboIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="employee_id" header="Employee Id" body={employeeIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="first_name" header="First Name" body={eFirstNameTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
@@ -220,12 +225,13 @@ const Allocation = () => {
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable> 
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Empoloyee List" modal className="p-fluid" footer={dialogBox ? addAllocationFooter : updateAllocationFooter} onHide={hideDialog}>
+                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Creating New Combo" modal className="p-fluid" footer={dialogBox ? addAllocationFooter : updateAllocationFooter} onHide={hideDialog}>
                         <div className="field">  
                             <label htmlFor="name">Select Employee First</label>
                             <select 
                                     name='employee_id'
                                     id='employee_id'  
+                                    value={allocationData.employee_id}
                                     onChange={onInputChange}
                                     style={{ height:'100%', width:'100%', padding:'4%', margin:'1%', border:'1px solid #cccccc', borderRadius:'5px'}}>       
                             {

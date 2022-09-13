@@ -15,8 +15,7 @@ export const updateProductApi = async (updateProduct) =>
             await axios.patch(`http://localhost:9091/api/product/${updateProduct.id}`, updateProduct, { headers: headersParam })
 
 export const getSingleProductApi = async (singleProduct) =>  
-                // console.log("Payload!!!!!!!!!!!!~~~~~~~", singleProduct)
-            await axios.get(`http://localhost:9091/api/product/${singleProduct.id}`, { headers: headersParam })
+            await axios.get(`http://localhost:9091/api/product/${singleProduct}`, { headers: headersParam })
 
 export const deleteProductApi = async (deleteProduct) =>
             await axios.delete(`http://localhost:9091/api/product/${deleteProduct.id}`, { headers: headersParam })

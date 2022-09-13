@@ -48,20 +48,13 @@ export function* onCreateComboStartAsync({ payload }) {
             yield put(createComboSuccess(response.data));
             Toast.fire({
                 icon: "success",
-                title: "Combo created Successfully!",
+                title: response.data.message,
             });
         } else {
-            if (payload.allocation_id === '') {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.allocation_id,
-                });
-            } else {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.product_id,
-                });
-            }
+            Toast.fire({
+                icon: "error",
+                title: response.data.message,
+            });
         }
     } catch (error) {
         yield put(createComboError(error.response));

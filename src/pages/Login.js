@@ -1,22 +1,24 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { InputText } from 'primereact/inputtext';
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import classNames from 'classnames';
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,  useSelector } from "react-redux";
 import { adminLoginStart } from '../redux/Actions/actions';
 
 const Login = () => {
-    
+
+    const users = useSelector((state) => state.data.loginData);
+  
     const [submitted, setSubmitted] = useState(false)
     const [data, setData] = useState({
         email: "",
         password: "",
     });
+
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -36,21 +38,18 @@ const Login = () => {
     };
     
    
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("HandleSubmit~~~~~~~~~~~~>", )
         setSubmitted(true)
-     
-        const userData = {
-            email: data.email,
-            password: data.password,
-        };
 
         if (submitted) {
-            dispatch(adminLoginStart(userData))  
-            history.push('/admindashboard');
-        }   
+          return dispatch(adminLoginStart(data)) 
+        }    
     };
-
+    if (users.success === true) {
+        history.push('/admindashboard');
+    }
     return (
         <div style={divStyle}>
             <Box

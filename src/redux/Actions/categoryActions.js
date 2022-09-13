@@ -42,6 +42,21 @@ export const updateCategoryError = (error) => ({
     payload: error,
 });
 
+export const getSingleCategoryStart = (singleCategory) => ({
+    type: types.GET_SINGLE_CATEGORY_START,
+    payload: singleCategory,
+});
+
+export const getSingleCategorySuccess = (singleCategory) => ({
+    type: types.GET_SINGLE_CATEGORY_SUCCESS,
+    payload: singleCategory,
+});
+
+export const getSingleCategoryError = (error) => ({
+    type: types.GET_SINGLE_CATEGORY_ERROR,
+    payload: error,
+})
+
 export const deleteCategoryStart = (deleteCategory) => ({
     type: types.DELETE_CATEGORY_START,
     payload: deleteCategory,
@@ -68,5 +83,19 @@ export const categoryStatusChangeSuccess = () => ({
 
 export const categoryStatusChangeError = (error) => ({
     type: types.CATEGORY_STATUS_CHANGE_ERROR,
+    payload: error,
+});
+
+export const loadStocksStart = () => ({
+    type: types.LOAD_STOCKS_START,
+});
+
+export const loadStocksSuccess = (stocks) => ({
+    type: types.LOAD_STOCKS_SUCCESS,
+    payload: stocks,
+});
+
+export const loadStocksError = (error) => ({
+    type: types.LOAD_STOCKS_ERROR,
     payload: error,
 })

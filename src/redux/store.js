@@ -3,16 +3,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from "redux-saga";
 import { createBrowserHistory } from "history";
 
-
 import logger from "redux-logger";
-
 import rootReducer from "./rootReducer";
 import rootSaga from './Sagas/index';
 
 const sagaMiddleware = createSagaMiddleware();
-// const middleware = routerMiddleware(browserHistory());
-
-
 const middlewares = [sagaMiddleware];
 
 if(process.env.NODE_ENV === 'development') {

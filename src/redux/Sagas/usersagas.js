@@ -2,29 +2,27 @@ import * as types from "../ActionTypes/actionTypes";
 import { takeLatest, put, all, fork, call } from "redux-saga/effects";
 import Swal from "sweetalert2";
 
-import { 
-    loadUsersSuccess, 
-    loadUsersError, 
-    adminLoginSuccess, 
-    adminLoginError, 
+import {
+    loadUsersSuccess,
+    loadUsersError,
+    adminLoginSuccess,
+    adminLoginError,
     adminLogoutSuccess,
     adminLogoutError,
-    addNewEmployeeSuccess, 
-    addNewEmployeeError, 
-    adminChangePasswordSuccess, 
-    adminChangePasswordError, 
-    updateEmployeeSuccess, 
-    updateEmployeeError, 
+    addNewEmployeeSuccess,
+    addNewEmployeeError,
+    adminChangePasswordSuccess,
+    adminChangePasswordError,
+    updateEmployeeSuccess,
+    updateEmployeeError,
     deleteEmployeeSuccess,
-    deleteEmployeeError, 
-    adminLogoutStart} from '../Actions/actions';
+    deleteEmployeeError,
+    adminLogoutStart,
+    getSingleEmployeeSuccess,
+    getSingleEmployeeError,
+} from "../Actions/actions";
 
-import { loadUsersApi, 
-        adminLoginApi, 
-        addEmployeeApi, 
-        adminChangePassApi, 
-        updateEmployeeApi,
-        deleteEmployeeApi } from "../APIs/api";
+import { loadUsersApi, adminLoginApi, addEmployeeApi, adminChangePassApi, updateEmployeeApi, deleteEmployeeApi, getSingleEmployeeApi } from "../APIs/api";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -41,7 +39,6 @@ export function* onLoadUsersStartAsync() {
         }
     } catch (error) {
         yield put(loadUsersError(error.response));
-
     }
 }
 
@@ -60,16 +57,17 @@ export function* onAdminLoginStartAsync({ payload }) {
                 icon: "error",
                 title: response.data.message,
             });
+            return response;
         }
     } catch (error) {
-        yield put(adminLoginError(error.response)); 
+        yield put(adminLoginError(error.response));
     }
 }
 
 export function* onAdminChangePassAsync({ payload }) {
     try {
         const response = yield call(adminChangePassApi, payload);
-        if(response.data.success === true) {
+        if (response.data.success === true) {
             yield put(adminChangePasswordSuccess(response.data));
             Toast.fire({
                 icon: "success",
@@ -89,54 +87,96 @@ export function* onAdminChangePassAsync({ payload }) {
 export function* onAdminLogoutStartAsync() {
     try {
         localStorage.removeItem("ADMIN");
-        const response = yield call(adminLogoutStart) 
-        if(response.data.success === true) {
+        const response = yield call(adminLogoutStart);
+        if (response.data.success === true) {
             yield put(adminLogoutSuccess(response.data));
         }
     } catch (error) {
         yield put(adminLogoutError(error.response));
     }
-} 
-
+}
 
 export function* onAddNewEmployeeStartAsync({ payload }) {
-    
     try {
         const response = yield call(addEmployeeApi, payload);
-        if(response.data.success === true) {
+        if (response.data.success === true ) {
             yield put(addNewEmployeeSuccess(response.data));
             Toast.fire({
                 icon: "success",
                 title: response.data.message,
             });
         } else {
-            Toast.fire({
-                icon: "error",
-                title: response.data.message,
-            });
+            if (response.data.errors.first_name) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.first_name,
+                });
+            } else if (response.data.errors.last_name) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.last_name,
+                });
+            } else if (response.data.errors.email) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.email,
+                });
+            } else if (response.data.errors.phone) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.phone,
+                });
+            } else if (response.data.errors.password) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.password,
+                });
+            } else if (response.data.errors.confirm_password) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.confirm_password,
+                });
+            }  else {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.message,
+                });
+            } 
         }
     } catch (error) {
         yield put(addNewEmployeeError(error.response));
     }
 }
 
-export function* onUpdateEmployeeStartAsync({ payload }) {
+
+export  function* onUpdateEmployeeStartAsync({ payload }) {
     try {
         const response = yield call(updateEmployeeApi, payload);
-        if(response.data.success === true) {
+        if (response.data.success === true) {
             yield put(updateEmployeeSuccess(response.data));
             Toast.fire({
                 icon: "success",
                 title: response.data.message,
             });
         } else {
-            Toast.fire({
-                icon: "error",
-                title: response.data.message,
-            });
-        }
-        
-    } catch (error) {
+            if (response.data.errors.last_name) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.last_name,
+                });
+            }     
+            else if (response.data.errors.first_name) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.first_name,
+                })
+            } else {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.message,
+                })
+            }
+    }} catch (error) {
         yield put(updateEmployeeError(error.response));
     }
 }
@@ -161,6 +201,19 @@ export function* onDeleteEmployeeStartAsync(employeeId) {
     }
 }
 
+export function* onSigleEmployeeStartAsync ({ payload }) {
+    try {
+        const response = yield call(getSingleEmployeeApi, payload)
+        console.log("API RESPONSE~~~~~~~~~~~", payload)
+        if (response.data.success === true) {
+            yield put(getSingleEmployeeSuccess(response.data.data));
+            console.log("API RESPONSE~~~~~~~~~~~", response.data.data)
+        }
+    } catch (error) {
+        yield put(getSingleEmployeeError(error.response));
+    }
+}
+
 export function* onAdminLogin() {
     yield takeLatest(types.ADMIN_LOGIN_START, onAdminLoginStartAsync);
 }
@@ -170,7 +223,7 @@ export function* onAdminChangePass() {
 }
 
 export function* onAdminLogout() {
-    yield takeLatest(types.ADMIN_LOGOUT_START, onAdminLogoutStartAsync );
+    yield takeLatest(types.ADMIN_LOGOUT_START, onAdminLogoutStartAsync);
 }
 
 export function* onLoadUsers() {
@@ -185,19 +238,23 @@ export function* onUpdateEmployee() {
     yield takeLatest(types.UPDATE_EMPLOYEE_START, onUpdateEmployeeStartAsync);
 }
 
+export function* onGetSingleEmployee() {
+    yield takeLatest(types.GET_SINGLE_EMPLOYEE_START, onSigleEmployeeStartAsync);
+}
+
 export function* onDeleteEmployee() {
     yield takeLatest(types.DELETE_EMPLOYEE_START, onDeleteEmployeeStartAsync);
 }
 
 const userSagas = [
-                    fork(onLoadUsers), 
-                    fork(onAdminLogin), 
-                    fork(onAdminLogout),
-                    fork(onAddNewEmployee), 
-                    fork(onAdminChangePass), 
-                    fork(onUpdateEmployee),
-                    fork(onDeleteEmployee),
-                ];
+    fork(onLoadUsers), 
+    fork(onAdminLogin), 
+    fork(onAdminLogout), 
+    fork(onAddNewEmployee), 
+    fork(onAdminChangePass), 
+    fork(onUpdateEmployee), 
+    fork(onGetSingleEmployee),
+    fork(onDeleteEmployee)];
 
 export default function* userSaga() {
     yield all([...userSagas]);

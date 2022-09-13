@@ -13,6 +13,10 @@ import {
     deleteCategoryError,
     categoryStatusChangeSuccess,
     categoryStatusChangeError,
+    getSingleCategorySuccess,
+    getSingleCategoryError,
+    loadStocksSuccess,
+    loadStocksError
 } from '../Actions/categoryActions';
 
 import {
@@ -21,6 +25,8 @@ import {
     updateCategoryApi,
     deleteCategoryApi,
     changeStatusApi,
+    getSingleCategoryApi,
+    loadStocksApi,
 } from '../APIs/categoryApi';
 
 
@@ -54,7 +60,7 @@ export function* onAddNewCategoryStartAsync({ payload }) {
         } else {
             Toast.fire({
                 icon: "error",
-                title: response.data.errors.category_name,
+                title: response.data.message,
             });
         }
     } catch (error) {
@@ -122,6 +128,30 @@ export function* onCategoryStatusStartAsync({payload}) {
     }
 }
 
+export function* onGetSingleCategoryStartAsync({ payload }) {
+    try {
+        const response = yield call(getSingleCategoryApi, payload)
+        if (response.data.success === true) {
+            yield put(getSingleCategorySuccess(response.data.categoryInfo));
+        }
+    } catch (error) {
+        yield put(getSingleCategoryError(error.response));
+    }
+}
+
+export function* onLoadStocksStartAsync() {
+    try {
+        const response = yield call(loadStocksApi)
+       
+        if (response.data.success === true) {
+            console.log("API RESPONSE~~~~~~>>>>", response.data)
+            yield put(loadStocksSuccess, response.data)
+        }
+    } catch (error) {
+        yield put(loadStocksError(error.response));
+    }
+}
+
 export function* onLoadCategory() {
     yield takeLatest(types.LOAD_CATEGORIES_START, onLoadCategoryStartAsync);
 }
@@ -142,12 +172,22 @@ export function* onStatusChange() {
     yield takeLatest(types.CATEGORY_STATUS_CHANGE_START, onCategoryStatusStartAsync);
 }
 
+export function* onSingleCategory() {
+    yield takeLatest(types.GET_SINGLE_CATEGORY_START, onGetSingleCategoryStartAsync);
+}
+
+export function* onLoadStocksStart() {
+    yield takeLatest(types.LOAD_STOCKS_START, onLoadStocksStartAsync)
+}
+
 const categorySagas = [
     fork(onLoadCategory),
     fork(onAddNewCategory),
     fork(onUpdateCategory),
     fork(onDeleteCategory),
     fork(onStatusChange),
+    fork(onSingleCategory),
+    fork(onLoadStocksStart),
 ];
 
 export default function* categorySaga() {
