@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory,  useParams} from "react-router-dom";
-import {  getSingleProductStart  } from "../../redux/Actions/productActions";
+import { getSingleDepartmentStart } from '../../redux/Actions/departmentActions';
 import { Button } from "primereact/button";
 import { Toolbar } from "primereact/toolbar"
 
-const Product = () => {
+const Department = () => {
+
     const dispatch = useDispatch();
     const history = useHistory();
-    const { id } = useParams();
-    const getsingleProduct = useSelector((state) => state.singleProduct.singleProduct)
-    console.log("SINGLE DATA SHOWW~~~~~>>>>",getsingleProduct)
-    
+    const { id } = useParams(); 
+    const departmentSingle = useSelector((state) =>  state?.department?.departmentsDetails);
+
     useEffect(() => {
-        dispatch(getSingleProductStart(id));
+        dispatch(getSingleDepartmentStart(id));
     }, []);
 
     const rightToolbarTemplate = () => {
@@ -25,11 +25,12 @@ const Product = () => {
             </React.Fragment>
         )
     }
+    
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <div className="font-medium text-4xl text-900 mb-3">{`Product Information/${getsingleProduct.itemName}`}</div>
+                    <div className="font-medium text-4xl text-900 mb-3">{`Department Information/${departmentSingle.name}`}</div>
                 </div>
             </React.Fragment>
         )
@@ -44,39 +45,27 @@ const Product = () => {
          <ul className="list-none p-0 m-0">
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium mb-2">Id</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.itemTag}</div>
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.departmentUniqueId}</div>
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Name</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.itemName}</div>
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.name}</div>
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Description</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.description}</div>   
-             </li>
-             <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
-                 <div className="text-500 text-2xl w-6 md:w-3 font-medium">Category</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.category?.categoryName}</div>    
-             </li>
-             <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
-                 <div className="text-500 text-2xl w-6 md:w-3 font-medium">Cost</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.cost}</div>    
-             </li>
-             <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
-                 <div className="text-500 text-2xl w-6 md:w-3 font-medium">Purchase Date</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.datePurchased}</div> 
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.description}</div>
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Created At</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.created_at}</div>    
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.created_at}</div>   
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Updated At</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.updated_at}</div>    
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.updated_at}</div>    
              </li>
          </ul>
-    </div>
+ </div>
   )
 }
 
-export default Product;
+export default Department

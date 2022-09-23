@@ -1,15 +1,14 @@
 import React,{ useState } from 'react'
-import Box from "@mui/material/Box";
-import { InputText } from 'primereact/inputtext';
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
+import { Password } from 'primereact/password';
 import classNames from 'classnames';
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { adminChangePasswordStart } from '../redux/Actions/actions';
+import { Button } from 'primereact/button';
 
 const ChangePassword = () => {
 
+    const users = useSelector((state) => state.data.changePass);
     const [submitted, setSubmitted] = useState(false)
     const dispatch = useDispatch();
 
@@ -39,104 +38,100 @@ const ChangePassword = () => {
         dispatch(adminChangePasswordStart(adminChangePass));
     }
 
+    if (users.success === true) {
+        history.push('/admindashboard');
+    }
+
 
   return (
-    <div style={divStyle}>
-    <Box
-        sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            "& > :not(style)": {
-                m: 1,
-                width: 600,
-                height: 600,
-            },
-        }}>
+   
+        <div className="flex justify-content-center border-round mt-8">
+                <div className="card w-30rem ">
+                
+                <div className="flex justify-content-center">
+                    <img src='assets/layout/images/logo-dark.svg' alt="logo" />
+                </div>
+               
+                    <h3 className="text-center mb-8">Change Password</h3>
 
-        <Paper elevation={5}> 
-            <img src='assets/layout/images/logo-dark.svg'  alt="logo" style={{ marginLeft:'245px', marginTop: '20px'}}/>
+                    <form onSubmit={handleSubmit} className="p-fluid">
+                        <div className="formgrid grid">
+                            <div className="field col">
+                                <label>Enter Current Password</label>
+                            </div>
 
-            <form onSubmit={handleSubmit} style={container}>
-                        <div>
-                        <label htmlFor="name">Enter Current Password</label>
-                            <InputText
-                                style={textInputs}
-                                className={classNames({ 'p-invalid': submitted && !data.currentPassword})}
-                                id="currentPassword"
-                                name="currentPassword"
-                                label="current Password"
-                                placeholder="currentPassword"
-                                value={data.currentPassword}
-                                onChange={handleChange}
-                            />
-                            {submitted && !data.currentPassword && <small className="p-invalid">Current Password is required.</small>}
+                            <div className="field col">
+                                <Password
+                                    className={classNames({ 'p-invalid': submitted && !data.currentPassword})}
+                                    id="currentPassword"
+                                    name="currentPassword"
+                                    label="current Password"
+                                    value={data.currentPassword}
+                                    onChange={handleChange}
+                                    toggleMask
+                                    feedback={false} 
+                                    autoFocus />
+                                {submitted && !data.currentPassword && <small className="p-error">Current Password is required.</small>}
+                            </div>
+                            <div>
+
+                            </div>
                         </div>
-                        <br/>
-                        <div>
-                            <label htmlFor="name">New Password</label>
-                            <InputText
-                                className={classNames({ 'p-invalid': submitted && !data.newPassword})}
-                                style={textInputs}
-                                id="newPassword"
-                                name="newPassword"
-                                label="new Password"
-                                type="password"
-                                value={data.newPassword}
-                                onChange={handleChange}
-                            />
+                        
+
+                        <div className="formgrid grid">
+                            <div className="field col">
+                                <label>Enter New Password</label>
+                            </div>
+
+                            <div className="field col">
+                                <Password
+                                    className={classNames({ 'p-invalid': submitted && !data.newPassword})}     
+                                    id="newPassword"
+                                    name="newPassword"
+                                    label="new Password"
+                                    type="password"
+                                    value={data.newPassword}
+                                    onChange={handleChange}
+                                    toggleMask
+                                    feedback={false} />   
+                                {submitted && !data.newPassword && <small className="p-error">New Password Please!.</small>} 
+                            </div>
                         </div>
-                        {submitted && !data.newPassword && <small className="p-invalid">New Password Please!.</small>}
-                        <br/>
-                        <div>
-                            <label htmlFor="name">Re-enter Password</label>
-                            <InputText
-                                className={classNames({ 'p-invalid': submitted && !data.confirmPassword})}
-                                style={textInputs}
-                                id="confirmPassword"
-                                name="confirmPassword" 
-                                label="confirmPassword"
-                                type="password"
-                                value={data.confirmPassword}
-                                onChange={handleChange}
-                            />
-                            {submitted && !data.confirmPassword && <small className="p-invalid">Confirm Password is required.</small>}
+
+                        <div className="formgrid grid">
+                            <div className="field col">
+                                <label>Enter New Password</label>
+                            </div>
+
+                            <div className="field col">
+                                <Password
+                                    className={classNames({ 'p-invalid': submitted && !data.confirmPassword})}
+                                    id="confirmPassword"
+                                    name="confirmPassword" 
+                                    label="confirmPassword"
+                                    type="password"
+                                    value={data.confirmPassword}
+                                    onChange={handleChange} 
+                                    toggleMask
+                                    feedback={false} />  
+                                {submitted && !data.confirmPassword && <small className="p-error">Confirm Password is required.</small> || submitted && data.Password !== data.confirmPassword && <small className="p-error">Password and Confirm Password Does not match!</small>} 
+                            </div>
                         </div>
-                        <br/>
-                        <div>
-                            <Button variant="contained" size="large" style={textInputs} type="submit" >
-                                Login with New Password
-                            </Button>
-                            <Button  size="large" style={textInputs} onClick={() => history.push("/adminDashboard") }>
-                                Cancel
-                            </Button>
+
+                        <div className="formgrid grid">
+                            <div className="field col">
+                                <Button label="Cancel" onClick={() => history.push("/adminDashboard") } icon="pi pi-times" className="p-button-danger mr-2 mb-2" />
+                            </div>
+                            <div className="field col">
+                                <Button label="Apply" icon="pi pi-check" className="p-button-success mr-2 mb-2"/>
+                            </div>
                         </div>
                     </form>
-        </Paper>
-    </Box>
-    </div>
+                </div>
+        </div>
   )
 }
 
 export default ChangePassword;
 
-const divStyle = {
-    display: "flex",
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-};
-
-const textInputs = {
-    width: "97%",
-    height:'100%',
-    margin: "8px",
-};
-
-const container = {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: '8px',
-    margin: '8px'
-};

@@ -102,7 +102,7 @@ function* onGetSingleProductStartAsync({ payload }) {
     try {
         const response = yield call(getSingleProductApi, payload)
         if (response.data.success === true) {
-            yield put(getSingleProductSuccess(response.data.productInfo));
+            yield put(getSingleProductSuccess(response.data.itemData));
         }
     } catch (error) {
         yield put(getSingleProductError(error.response));

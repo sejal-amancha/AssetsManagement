@@ -20,8 +20,9 @@ export const adminChangePasswordStart = (adminChangePass) => ({
     payload: adminChangePass
 });
 
-export const adminChangePasswordSuccess = () => ({
+export const adminChangePasswordSuccess = (changePass) => ({
     type: types.ADMIN_CHANGE_PASSWORD_SUCCESS,
+    payload: changePass,
 });
 
 export const adminChangePasswordError = (error) => ({

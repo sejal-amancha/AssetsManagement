@@ -212,9 +212,8 @@ const Allocation = () => {
                     <DataTable ref={dt} 
                         dataKey="id" value={allocationss} paginator rows={5} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Allocations"
                         globalFilter={globalFilter} emptyMessage="No Allocations found." header={header} responsiveLayout="scroll">
-
 
                         <Column field="combo_id" header="Combo ID" body={comboIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="employee_id" header="Employee Id" body={employeeIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>

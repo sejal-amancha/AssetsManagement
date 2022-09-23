@@ -34,7 +34,7 @@ const Toast = Swal.mixin({
 export function* onLoadUsersStartAsync() {
     try {
         const response = yield call(loadUsersApi);
-        if (response.status === 200) {
+        if (response.data.success === true) {
             yield put(loadUsersSuccess(response.data));
         }
     } catch (error) {
@@ -158,24 +158,26 @@ export  function* onUpdateEmployeeStartAsync({ payload }) {
                 icon: "success",
                 title: response.data.message,
             });
-        } else {
-            if (response.data.errors.last_name) {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.last_name,
-                });
-            }     
-            else if (response.data.errors.first_name) {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.first_name,
-                })
-            } else {
+        } 
+        // else {
+        //     if (response.data.errors.last_name) {
+        //         Toast.fire({
+        //             icon: "error",
+        //             title: response.data.errors.last_name,
+        //         });
+        //     }     
+        //     else if (response.data.errors.first_name) {
+        //         Toast.fire({
+        //             icon: "error",
+        //             title: response.data.errors.first_name,
+        //         })
+        //     } 
+            else {
                 Toast.fire({
                     icon: "error",
                     title: response.data.message,
                 })
-            }
+            // }
     }} catch (error) {
         yield put(updateEmployeeError(error.response));
     }
@@ -204,10 +206,8 @@ export function* onDeleteEmployeeStartAsync(employeeId) {
 export function* onSigleEmployeeStartAsync ({ payload }) {
     try {
         const response = yield call(getSingleEmployeeApi, payload)
-        console.log("API RESPONSE~~~~~~~~~~~", payload)
         if (response.data.success === true) {
-            yield put(getSingleEmployeeSuccess(response.data.data));
-            console.log("API RESPONSE~~~~~~~~~~~", response.data.data)
+            yield put(getSingleEmployeeSuccess(response.data.employeeData));
         }
     } catch (error) {
         yield put(getSingleEmployeeError(error.response));

@@ -4,6 +4,7 @@ const initialState = {
     loginData: [],
     users: [],
     singleUser: [],
+    changePass: [],
     loading: false,
 }
 
@@ -40,6 +41,11 @@ const usersReducer = ( state = initialState, action ) => {
                 singleUser: action.payload,
             }
         case types.ADMIN_CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                changePass: action.payload,
+            }
         case types.ADMIN_LOGOUT_SUCCESS:
         case types.ADD_NEW_EMPLOYEE_SUCCESS:
         case types.UPDATE_EMPLOYEE_SUCCESS:

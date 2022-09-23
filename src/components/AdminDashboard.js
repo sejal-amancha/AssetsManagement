@@ -6,33 +6,35 @@ import { CSSTransition } from 'react-transition-group';
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
-import Dashboard from './components/Dashboard';
+import Dashboard from './Dashboard';
 
-import PrimeReact from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import 'prismjs/themes/prism-coy.css';
-import './assets/demo/flags/flags.css';
-import './assets/demo/Demos.scss';
-import './assets/layout/layout.scss';
-import './App.scss';
+import '../assets/demo/flags/flags.css';
+import '../assets/demo/Demos.scss';
+import '../assets/layout/layout.scss';
+import '../App.scss';
 
-import EmployeesData from './components/menu/EmployeesData';
-import Categories from './components/menu/Categories';
-import Products from './components/menu/Products';
-import Combos from './components/menu/Combos';
-import Allocations from './components/menu/Allocation'
-import Product from './pages/SingleViews/Product';
-import Category from './pages/SingleViews/Category';
-import Combo from './pages/SingleViews/Combo';
-import EditUser from './pages/EditComponent/EditUser';
-import AddEditProduct from './pages/EditComponent/AddEditProduct';
-import Employee from './pages/SingleViews/Employee';
-import Stocks from './components/menu/Stocks';
-import AddUser from './pages/EditComponent/AddUser';
+import EmployeesData from './menu/EmployeesData';
+import Categories from './menu/Categories';
+import Departments from './menu/Departments';
+import Products from './menu/Products';
+import Combos from './menu/Combos';
+import Allocations from './menu/Allocation'
+import Product from '../pages/SingleViews/Product';
+import Category from '../pages/SingleViews/Category';
+import Combo from '../pages/SingleViews/Combo';
+import AddEditProduct from '../pages/EditComponent/AddEditProduct';
+import Employee from '../pages/SingleViews/Employee';
+import Stocks from './menu/Stocks';
+import AddUser from '../pages/EditComponent/AddUser';
+import AddEditCategory from '../pages/EditComponent/AddEditCategory';
+import AddEditDepartment from '../pages/EditComponent/AddEditDepartment';
+import Department from '../pages/SingleViews/Department';
 
 
 const AdminDashboard = () => {
@@ -93,7 +95,6 @@ const AdminDashboard = () => {
         else {
             setMobileMenuActive((prevState) => !prevState);
         }
-
         event.preventDefault();
     }
 
@@ -103,14 +104,12 @@ const AdminDashboard = () => {
 
     const onMobileTopbarMenuClick = (event) => {
         mobileTopbarMenuClick = true;
-
         setMobileTopbarMenuActive((prevState) => !prevState);
         event.preventDefault();
     }
 
     const onMobileSubTopbarMenuClick = (event) => {
         mobileTopbarMenuClick = true;
-
         event.preventDefault();
     }
 
@@ -135,14 +134,11 @@ const AdminDashboard = () => {
         {
             label: 'Menu Hierarchy', icon: 'pi pi-fw pi-search',
             items: [
-                { label: 'EMPLOYEES INFO', icon: 'pi pi-fw pi-bookmark' , to: '/admindashboard/employees' },
-                { label: 'CATEGORIES INFO', icon: 'pi pi-fw pi-bookmark', 
-                    items: [
-                        { label: 'ALL CATEGORIES', icon: 'pi pi-fw pi-bookmark', to: '/admindashboard/categories' },
-                        { label: 'CHECK STOCKS', icon: 'pi pi-fw pi-bookmark', to: '/admindashboard/stocks' },
-                    ]},
-                { label: 'PRODUCTS INFO', icon: 'pi pi-fw pi-bookmark', to: '/admindashboard/products' },
-                { label: 'GET ALLOCATIONS', icon: 'pi pi-fw pi-bookmark', to: '/admindashboard/allocations' }, 
+                { label: 'CATEGORIES', icon: 'pi pi-fw pi-bars',  to: '/admindashboard/categories'},  
+                { label: 'DEPARTMENTS', icon: 'pi pi-fw pi-tag', to: '/admindashboard/departments' } ,
+                { label: 'EMPLOYEES INFO', icon: 'pi pi-fw pi-user-edit' , to: '/admindashboard/employees' },
+                { label: 'ASSETS INFO', icon: 'pi pi-fw pi-id-card', to: '/admindashboard/assets' },
+                { label: 'GET ALLOCATIONS', icon: 'pi pi-fw pi-tag', to: '/admindashboard/allocations' }, 
                 { label: 'COMBOS ASSIGN', icon: 'pi pi-fw pi-bookmark', to: '/admindashboard/combos' }, 
             ]
         },
@@ -177,7 +173,7 @@ const AdminDashboard = () => {
             <AppTopbar onToggleMenuClick={onToggleMenuClick} 
                 mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />
 
-            <div className="layout-sidebar" onClick={onSidebarClick}>
+            <div className="layout-sidebar pointer-events-auto" onClick={onSidebarClick}>
                 <AppMenu model={menu} onMenuItemClick={onMenuItemClick} />
             </div>
 
@@ -186,18 +182,24 @@ const AdminDashboard = () => {
                     <Route path="/admindashboard" exact render={() => <Dashboard location={location} />}  />
                     <Route path="/admindashboard/employees" component={EmployeesData} />
                     <Route path="/admindashboard/categories" component={Categories} />
-                    <Route path="/admindashboard/products" component={Products} />
+                    <Route path="/admindashboard/departments" component={Departments} />
+                    <Route path="/admindashboard/assets" component={Products} />
                     <Route path="/admindashboard/allocations" component={Allocations} />
                     <Route path="/admindashboard/combos" component={Combos} />   
                     <Route path="/admindashboard/stocks" component={Stocks} />
                     <Route path="/employee/:id" component={Employee} />
                     <Route path="/category/:id" component={Category} />
-                    <Route path="/product/:id" component={Product} />
+                    <Route path="/department/:id" component={Department} />
+                    <Route path="/asset/:id" component={Product} />
                     <Route path="/combo/:id" component={Combo} />
                     <Route path="/addnew-employee" component={AddUser} />
-                    <Route path="/update-employee/:id" component={EditUser}/>
-                    <Route path="/addnew-product" component={AddEditProduct} />
-                    <Route path="/update-product/:id" component={AddEditProduct} />     
+                    <Route path="/update-employee/:id" component={AddUser}/>
+                    <Route path="/addnew-asset" component={AddEditProduct} />
+                    <Route path="/update-asset/:id" component={AddEditProduct} />  
+                    <Route path="/addnew-category" component={AddEditCategory} />
+                    <Route path="/update-category/:id" component={AddEditCategory} />
+                    <Route path="/addnew-department" component={AddEditDepartment} />
+                    <Route path="/update-department/:id" component={AddEditDepartment} />
                 </div>
 
                 <AppFooter  />

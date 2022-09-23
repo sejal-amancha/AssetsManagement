@@ -34,7 +34,7 @@ const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
     showConfirmButton: false,
-    timer: 4000,
+    timer: 2000,
   });
 
 export function* onLoadCategoryStartAsync() {
@@ -58,10 +58,18 @@ export function* onAddNewCategoryStartAsync({ payload }) {
                 title: response.data.message,
             });
         } else {
-            Toast.fire({
-                icon: "error",
-                title: response.data.message,
-            });
+            if (response.data.errors.categoryName) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.categoryName,
+                }) 
+            } else {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.description,
+                }) 
+            }
+           
         }
     } catch (error) {
         yield put(addnewCategoryError(error.response));
@@ -71,6 +79,7 @@ export function* onAddNewCategoryStartAsync({ payload }) {
 export function* onUpdateCategoryStartAsync({ payload }) {
     try {
         const response = yield call(updateCategoryApi, payload)
+        
         if (response.data.success === true) {
             yield put(updateCategorySuccess(response.data));
             Toast.fire({
@@ -132,7 +141,7 @@ export function* onGetSingleCategoryStartAsync({ payload }) {
     try {
         const response = yield call(getSingleCategoryApi, payload)
         if (response.data.success === true) {
-            yield put(getSingleCategorySuccess(response.data.categoryInfo));
+            yield put(getSingleCategorySuccess(response.data.categoryData));
         }
     } catch (error) {
         yield put(getSingleCategoryError(error.response));
@@ -144,7 +153,6 @@ export function* onLoadStocksStartAsync() {
         const response = yield call(loadStocksApi)
        
         if (response.data.success === true) {
-            console.log("API RESPONSE~~~~~~>>>>", response.data)
             yield put(loadStocksSuccess, response.data)
         }
     } catch (error) {
