@@ -4,11 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { addNewEmployeeStart, updateEmployeeStart, loadUsersStart } from "../../redux/Actions/actions";
 import { loadDepartmentStart } from '../../redux/Actions/departmentActions';
 import { InputText } from "primereact/inputtext";
+import { InputNumber } from 'primereact/inputnumber';
 import { Button } from "primereact/button";
 // import { Calendar } from "primereact/calendar";
 import { Toolbar } from "primereact/toolbar";
 import classNames from "classnames";
 import { Dropdown } from 'primereact/dropdown';
+import { Password } from 'primereact/password';
 
 let emptyData = {
     firstName: "",
@@ -16,6 +18,8 @@ let emptyData = {
     email: "",
     phone: "",
     departmentId: '',
+    password: '',
+    confirmPassword: '',
 };
 
 const AddUser = () => {
@@ -27,10 +31,30 @@ const AddUser = () => {
     var { id } = useParams();
 
     const users = useSelector((state) => state?.data?.users?.rows);
-    const departmentsList = useSelector((state) => state?.department?.departments);
+    const departmentsList = useSelector((state) => state?.department?.departments?.rows);
     
     const [submitted, setSubmitted] = useState(false);
     const [editMode, setEditMode] = useState(false);
+
+    const validateEmail = (email) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validateName = (firstName,lastName) => {
+        const reg = /^(([a-zA-Z]{1,50}))$/;
+        return reg.test(String(firstName, lastName));
+    }
+
+    const validatePhone = (phone) => {
+        const phoneRe = /^(([0-9]{10}))$/;
+        return phoneRe.test(String(phone));
+    }
+
+    const validatePassword = (password , confirmPassword) => {
+        const stengthreg = /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{4,16}$/;
+        return stengthreg.test(String(password, confirmPassword));
+    }
 
     useEffect(() => {
         dispatch(loadUsersStart());
@@ -77,14 +101,14 @@ const AddUser = () => {
 
         if (!editMode) {
             setEmployee(employee);
-            if (employee.firstName && employee.lastName && employee.email && employee.phone && employee.departmentId) {
+            if (validateName(employee.firstName) && validateName(employee.lastName) && validateEmail(employee.email) && validatePhone(employee.phone) && employee.departmentId && validatePassword(employee.password) && validatePassword(employee.confirmPassword) ) {
                 dispatch(addNewEmployeeStart(employee));
                 setTimeout(() => {
                     history.push('/admindashboard/employees')
                 }, 2000)
             }   
         } else {
-            if (employee.firstName && employee.lastName && employee.email && employee.phone && employee.departmentId) {
+            if (validateName(employee.firstName) && validateName(employee.lastName) && validateEmail(employee.email) && validatePhone(employee.phone) && employee.departmentId) {
                 dispatch(updateEmployeeStart(employee));  
                 setTimeout(() => {
                     history.push('/admindashboard/employees')
@@ -109,25 +133,24 @@ const AddUser = () => {
             <div className="card p-fluid">
                     <div className="field">
                             <label htmlFor="name">First Name</label>
-                            <InputText id="firstName" value={employee.firstName} onChange={(e) => onInputChange(e, "firstName")} className={classNames({ "p-invalid": submitted && !employee.firstName })} required autoFocus />
-                            {submitted && !employee.firstName && <small className="p-error">First Name is required.</small>}
+                            <InputText id="firstName" value={employee.firstName} onChange={(e) => onInputChange(e, "firstName")} className={classNames({ "p-invalid": submitted && !employee.firstName && !validateName(employee.firstName) })} required autoFocus />
+                            {submitted && !employee.firstName && <small className="p-error">First Name is required.</small> || submitted && !validateName(employee.firstName) && <small className="p-error">Please Enter Valid Name!</small>}
                     </div>
                     <div className="field">
                             <label htmlFor="name">Last Name</label>
-                            <InputText id="lastName" value={employee.lastName} onChange={(e) => onInputChange(e, "lastName")} className={classNames({ "p-invalid": submitted && !employee.lastName })} required autoFocus />
-                            {submitted && !employee.lastName && <small className="p-error">Last Name is required.</small>}
-                    </div>
-                    
+                            <InputText id="lastName" value={employee.lastName} onChange={(e) => onInputChange(e, "lastName")} className={classNames({ "p-invalid": submitted && !employee.lastName && !validateName(employee.lastName) })} required autoFocus />
+                            {submitted && !employee.lastName && <small className="p-error">Last Name is required.</small> || submitted && !validateName(employee.lastName) && <small className="p-error">Please Enter Valid Name!</small> }
+                    </div>    
                     <div className="field">
                             <label htmlFor="name">Email Address</label>
-                            <InputText id="email" value={employee.email} onChange={(e) => onInputChange(e, "email")} className={classNames({ "p-invalid": submitted && !employee.email })} required autoFocus />
-                            {submitted && !employee.email && <small className="p-error">Please! provide Email-address</small>}
+                            <InputText id="email" value={employee.email} onChange={(e) => onInputChange(e, "email")} className={classNames({ "p-invalid": submitted && !employee.email && !validateEmail(employee.email)})} required autoFocus />
+                            {submitted && !employee.email && <small className="p-error">Please! provide Email-address</small> || submitted && !validateEmail(employee.email) && <small className="p-error">Please Enter Valid Email!</small>}
                     </div>
                     <div className="formgrid grid">
                         <div className="field col">
-                                <label htmlFor="name">Phone Number</label>
-                                <InputText id="phone" value={employee.phone} onChange={(e) => onInputChange(e, "phone")} className={classNames({ "p-invalid": submitted && !employee.phone })} required autoFocus />
-                                {submitted && !employee.phone && employee.phone.length <= 9 && <small className="p-error">Enter Valid Contact Number</small>}
+                            <label htmlFor="name">Phone Number</label>
+                            <InputText id="phone" value={employee.phone} onChange={(e) => onInputChange(e, "phone")} className={classNames({ "p-invalid": submitted && !employee.phone && !validatePhone(employee.phone) })} required autoFocus />
+                            {submitted && !employee.phone && <small className="p-error">Required Contact Number</small> || submitted && !validatePhone(employee.phone) && <small className="p-error">Enter Valid Contact Number</small>}
                         </div>
                         <div className="field col">
                             <label htmlFor="name">Select Department</label>
@@ -139,18 +162,20 @@ const AddUser = () => {
                             {submitted && !employee.departmentId && <small className="p-error">You have to select Department name</small>}
                         </div>
                     </div>
-                    {/* <div className="formgrid grid">
+                    <div style={editMode ? {display : "none"} : null} className="formgrid grid">
                             <div className="field col">
                                 <label htmlFor="name">Password</label>
-                                <InputText id="password" value={employee.password} onChange={(e) => onInputChange(e, "password")} className={classNames({ "p-invalid": submitted && !employee.password })} type="password" required autoFocus />
-                                {submitted && !employee.password && <small className="p-invalid">Password is Required!</small>}
+                                <Password  id="password" value={employee.password} onChange={(e) => onInputChange(e, "password")} className={classNames({ "p-invalid": submitted && !employee.password && !validatePassword(employee.password) })} toggleMask 
+                                feedback={false} required autoFocus />
+                                {submitted && !employee.password && <small className="p-error">Password is Required!</small> || submitted && !validatePassword(employee.password) && <small className="p-error">Must contains upper case, lower case, digit, special character</small> }
                             </div>
                             <div className="field col">
                                 <label htmlFor="name">Confirm Password</label>
-                                <InputText id="confirm_password" value={employee.confirm_password} onChange={(e) => onInputChange(e, "confirm_password")} className={classNames({ "p-invalid": submitted && !employee.confirm_password })} type="password" required autoFocus />
-                                {submitted && !employee.confirm_password && <small className="p-invalid">Re-enter Password!</small>}
+                                <Password id="confirmPassword" value={employee.confirmPassword} onChange={(e) => onInputChange(e, "confirmPassword")} className={classNames({ "p-invalid": submitted && !employee.confirmPassword})}  toggleMask 
+                                feedback={false} required autoFocus />
+                                {submitted && !employee.confirmPassword && <small className="p-error">Re-enter Password!</small> || submitted && employee.password !== employee.confirmPassword && <small className="p-error">password and Confirm Password not matched!</small>}
                             </div>
-                    </div> */}
+                    </div>
                     <div className="formgrid grid">
                         <div className="field col">
                             <Button label="Cancel" icon="pi pi-times"  className="p-button-secondary mr-2 mb-2" onClick={gotoPrevious}/>

@@ -8,12 +8,17 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 
 const Login = () => {
-    const users = useSelector((state) => state.data.loginData);
+    const users = useSelector((state) => state?.data?.loginData);
     const [submitted, setSubmitted] = useState(false);
     const [data, setData] = useState({
         email: "",
         password: "",
     });
+    useEffect(() => {
+        if(submitted){
+            dispatch(adminLoginStart(data));
+        }
+    }, [submitted]);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -34,19 +39,19 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-
-        if (submitted) {
-            return dispatch(adminLoginStart(data));
-        }
+        // if (submitted) {
+        //     return dispatch(adminLoginStart(data));
+        // }
     };
-    if (users.success === true) {
+    if (users.message === "Login successful") {
         history.push("/admindashboard");
+        window.location.reload();
     }
     return (
         <div className="flex justify-content-center border-round mt-8">
             <div className="card w-30rem ">
                 <div className="flex justify-content-center">
-                    <img src="assets/layout/images/logo-dark.svg" alt="logo" />
+                    <img src='assets/layout/images/koli-logo.png' alt="logo"  style={{ width:'50%'}}/>
                 </div>
 
                 <h3 className="text-center mb-8">LOG IN</h3>

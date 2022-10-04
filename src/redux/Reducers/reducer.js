@@ -5,6 +5,7 @@ const initialState = {
     users: [],
     singleUser: [],
     changePass: [],
+    singleUserAssignment: [],
     loading: false,
 }
 
@@ -18,6 +19,7 @@ const usersReducer = ( state = initialState, action ) => {
         case types.UPDATE_EMPLOYEE_START:
         case types.DELETE_EMPLOYEE_START:
         case types.GET_SINGLE_EMPLOYEE_START:
+        case types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_START:
             return {
                 ...state,
                 loading: true,
@@ -39,6 +41,12 @@ const usersReducer = ( state = initialState, action ) => {
                 ...state,
                 loading: false,
                 singleUser: action.payload,
+            }
+        case types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                singleUserAssignment: action.payload,
             }
         case types.ADMIN_CHANGE_PASSWORD_SUCCESS:
             return {
@@ -62,6 +70,7 @@ const usersReducer = ( state = initialState, action ) => {
         case types.UPDATE_EMPLOYEE_ERROR:
         case types.DELETE_EMPLOYEE_ERROR:
         case types.GET_SINGLE_EMPLOYEE_ERROR:
+        case types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_ERROR:
             return {
                 ...state,
                 loading: false,

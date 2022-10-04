@@ -22,7 +22,7 @@ const AddEditDepartment = () => {
 
     const [submitted, setSubmitted] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const departmentsList = useSelector((state) => state?.department?.departments);
+    const departmentsList = useSelector((state) => state?.department?.departments?.rows);
 
     useEffect(() => {
         dispatch(loadDepartmentStart());

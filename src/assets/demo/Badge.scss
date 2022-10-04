@@ -49,14 +49,16 @@
     font-size: 12px;
     letter-spacing: .3px;
 
-    &.status-1 {
-        background: #C8E6C9;
-        color: #256029;
+    &.status-false {
+        // background: #C8E6C9;
+        // color: #256029;
+        background: #B3E5FC;
+        color: #003366;
     }
 
-    &.status-0 {
-        background: #FFCDD2;
-        color: #C63737;
+    &.status-true {
+        background: #c2c2a3;
+        color: #3d3d29;
     }
 
     &.status-lowstock {

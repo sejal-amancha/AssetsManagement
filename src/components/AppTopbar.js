@@ -28,20 +28,19 @@ export const AppTopbar = (props) => {
         history.push("/changePass");
     };
 
-    const handleUserLogOut = async (e) => {
-        e.preventDefault();
-        setAnchorEl(null);
-
-        localStorage.removeItem("ADMIN");
+    const handleUserLogOut = async () => {
+        // e.preventDefault();
+        // setAnchorEl(null);
         history.push("/login");
+        sessionStorage.removeItem("ADMIN");
+        
     };
 
     return (
         <div className="layout-topbar">
             <Link to="/" className="layout-topbar-logo">
-                <img src={"assets/layout/images/logo-dark.svg"} alt="logo" />
-
-                <span>AMS</span>
+                <img src={"assets/layout/images/koli-logo.png"} alt="logo" />
+                {/* <span>AMS</span> */}
             </Link>
 
             <button type="button" className="p-link  layout-menu-button layout-topbar-button" onClick={props.onToggleMenuClick}>

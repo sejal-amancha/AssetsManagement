@@ -1,7 +1,9 @@
 import * as types from "../ActionTypes/actionTypes";
 import { takeLatest, put, all, fork, call } from "redux-saga/effects";
 import Swal from "sweetalert2";
-
+import crypto from "crypto-js";
+// require("dotenv").config();
+// import encrypt from '../../crypto'
 import {
     loadUsersSuccess,
     loadUsersError,
@@ -20,9 +22,19 @@ import {
     adminLogoutStart,
     getSingleEmployeeSuccess,
     getSingleEmployeeError,
+    getSingleEmployeeAssignemntSuccess,
+    getSingleEmployeeAssignemntError,
 } from "../Actions/actions";
 
-import { loadUsersApi, adminLoginApi, addEmployeeApi, adminChangePassApi, updateEmployeeApi, deleteEmployeeApi, getSingleEmployeeApi } from "../APIs/api";
+import { 
+    loadUsersApi, 
+    adminLoginApi, 
+    addEmployeeApi, 
+    adminChangePassApi, 
+    updateEmployeeApi, 
+    deleteEmployeeApi, 
+    getSingleEmployeeApi, 
+    getSingleEmployeeAssignmentApi } from "../APIs/api";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -45,8 +57,8 @@ export function* onLoadUsersStartAsync() {
 export function* onAdminLoginStartAsync({ payload }) {
     try {
         const response = yield call(adminLoginApi, payload);
-        if (response.data.success === true) {
-            localStorage.setItem("ADMIN", JSON.stringify(response.data.data.token));
+        if (response.data.message === "Login successful") {
+            sessionStorage.setItem("ADMIN", JSON.stringify(response.data.data.token));
             yield put(adminLoginSuccess(response.data));
             Toast.fire({
                 icon: "success",
@@ -86,7 +98,7 @@ export function* onAdminChangePassAsync({ payload }) {
 
 export function* onAdminLogoutStartAsync() {
     try {
-        localStorage.removeItem("ADMIN");
+        sessionStorage.removeItem("ADMIN");
         const response = yield call(adminLogoutStart);
         if (response.data.success === true) {
             yield put(adminLogoutSuccess(response.data));
@@ -99,27 +111,27 @@ export function* onAdminLogoutStartAsync() {
 export function* onAddNewEmployeeStartAsync({ payload }) {
     try {
         const response = yield call(addEmployeeApi, payload);
-        if (response.data.success === true ) {
+        if (response.data.success === true) {
             yield put(addNewEmployeeSuccess(response.data));
             Toast.fire({
                 icon: "success",
                 title: response.data.message,
             });
         } else {
-            if (response.data.errors.first_name) {
+            if (response.data.errors.firstName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.first_name,
+                    title: response.data.errors.firstName,
                 });
             } else if (response.data.errors.last_name) {
                 Toast.fire({
                     icon: "error",
                     title: response.data.errors.last_name,
                 });
-            } else if (response.data.errors.email) {
+            } else if (response.data.errors.lastName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.email,
+                    title: response.data.errors.lastName,
                 });
             } else if (response.data.errors.phone) {
                 Toast.fire({
@@ -131,25 +143,24 @@ export function* onAddNewEmployeeStartAsync({ payload }) {
                     icon: "error",
                     title: response.data.errors.password,
                 });
-            } else if (response.data.errors.confirm_password) {
+            } else if (response.data.errors.confirmPassword) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.confirm_password,
+                    title: response.data.errors.confirmPassword,
                 });
-            }  else {
+            } else {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.message,
+                    title: response.data.errors.email,
                 });
-            } 
+            }
         }
     } catch (error) {
         yield put(addNewEmployeeError(error.response));
     }
 }
 
-
-export  function* onUpdateEmployeeStartAsync({ payload }) {
+export function* onUpdateEmployeeStartAsync({ payload }) {
     try {
         const response = yield call(updateEmployeeApi, payload);
         if (response.data.success === true) {
@@ -158,27 +169,45 @@ export  function* onUpdateEmployeeStartAsync({ payload }) {
                 icon: "success",
                 title: response.data.message,
             });
-        } 
-        // else {
-        //     if (response.data.errors.last_name) {
-        //         Toast.fire({
-        //             icon: "error",
-        //             title: response.data.errors.last_name,
-        //         });
-        //     }     
-        //     else if (response.data.errors.first_name) {
-        //         Toast.fire({
-        //             icon: "error",
-        //             title: response.data.errors.first_name,
-        //         })
-        //     } 
-            else {
+        } else {
+            if (response.data.errors.firstName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.message,
-                })
-            // }
-    }} catch (error) {
+                    title: response.data.errors.firstName,
+                });
+            } else if (response.data.errors.last_name) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.last_name,
+                });
+            } else if (response.data.errors.lastName) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.lastName,
+                });
+            } else if (response.data.errors.phone) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.phone,
+                });
+            } else if (response.data.errors.password) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.password,
+                });
+            } else if (response.data.errors.confirmPassword) {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.confirmPassword,
+                });
+            } else {
+                Toast.fire({
+                    icon: "error",
+                    title: response.data.errors.email,
+                });
+            }
+        }
+    } catch (error) {
         yield put(updateEmployeeError(error.response));
     }
 }
@@ -203,14 +232,32 @@ export function* onDeleteEmployeeStartAsync(employeeId) {
     }
 }
 
-export function* onSigleEmployeeStartAsync ({ payload }) {
+// const encrypt = (id) => {
+//     const encryptedId = crypto.AES.encrypt(id, process.env.REACT_APP_SECRET_KEY).toString();
+//     console.log("--->",encryptedId);
+//     return encryptedId;
+// };
+
+export function* onSigleEmployeeStartAsync({ payload }) {
+    // const ID = encrypt(payload);
     try {
-        const response = yield call(getSingleEmployeeApi, payload)
+        const response = yield call(getSingleEmployeeApi, payload)     
         if (response.data.success === true) {
             yield put(getSingleEmployeeSuccess(response.data.employeeData));
         }
     } catch (error) {
         yield put(getSingleEmployeeError(error.response));
+    }
+}
+
+export function* onSingleEmployeeAssignStartAsync({ payload }) {
+    try {
+        const response = yield call(getSingleEmployeeAssignmentApi, payload);
+        if (response.data.success === true) {
+            yield put(getSingleEmployeeAssignemntSuccess(response.data.data));
+        }
+    } catch (error) {
+        yield put(getSingleEmployeeAssignemntError(error.response));
     }
 }
 
@@ -242,19 +289,15 @@ export function* onGetSingleEmployee() {
     yield takeLatest(types.GET_SINGLE_EMPLOYEE_START, onSigleEmployeeStartAsync);
 }
 
+export function* onGetSingleEmployeeAssign() {
+    yield takeLatest(types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_START, onSingleEmployeeAssignStartAsync);
+}
+
 export function* onDeleteEmployee() {
     yield takeLatest(types.DELETE_EMPLOYEE_START, onDeleteEmployeeStartAsync);
 }
 
-const userSagas = [
-    fork(onLoadUsers), 
-    fork(onAdminLogin), 
-    fork(onAdminLogout), 
-    fork(onAddNewEmployee), 
-    fork(onAdminChangePass), 
-    fork(onUpdateEmployee), 
-    fork(onGetSingleEmployee),
-    fork(onDeleteEmployee)];
+const userSagas = [fork(onLoadUsers), fork(onAdminLogin), fork(onAdminLogout), fork(onAddNewEmployee), fork(onAdminChangePass), fork(onUpdateEmployee), fork(onGetSingleEmployee), fork(onDeleteEmployee), fork(onGetSingleEmployeeAssign)];
 
 export default function* userSaga() {
     yield all([...userSagas]);

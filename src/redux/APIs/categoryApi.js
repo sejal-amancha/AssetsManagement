@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const token = JSON.parse(localStorage.getItem("ADMIN"));
+const token = JSON.parse(sessionStorage.getItem("ADMIN"));
 const headersParam = {
     "Authorization" : `Bearer ${token}`
 };
 
-export const loadCategoryApi = async () => await axios.get(`http://localhost:9091/api/category/`);
+export const loadCategoryApi = async () => await axios.get(`http://localhost:9091/api/category/`,  { headers: headersParam });
 
 export const addNewCategoryApi = async (newCategory) => await axios.post(`http://localhost:9091/api/category/create`, newCategory, { headers: headersParam });
 

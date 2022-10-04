@@ -9,6 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { loadUsersStart, deleteEmployeeStart } from "../../redux/Actions/actions";
 import { Link } from "react-router-dom";
+import Barcode from 'react-barcode';
+import QRCode from "react-qr-code";
+import JSONFormatter from 'json-formatter-js'
+
+
 
 const EmployeesData = () => {
     
@@ -76,6 +81,22 @@ const EmployeesData = () => {
         );
     };
 
+    const imageBodyTemplate = (rowData) => {
+        return (
+            <>
+                <span className="p-column-title">Item Barcode</span>
+                {/* <QRCode
+                    size={256}
+                    style={{ height: "auto", maxWidth: "60%", width: "60%" }}
+                    value={JSON.stringify(rowData)}
+                    viewBox={`0 0 256 256`}
+                    /> */}
+                    
+                <Barcode value={rowData.barcode} displayValue={false} width={1} height={30} />    
+            </>
+        )
+    }
+
     const fnameBodyTemplate = (rowData) => {
         return (
             <>
@@ -93,24 +114,6 @@ const EmployeesData = () => {
         );
     };
 
-    const emailAddressBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Email</span>
-                {rowData.email}
-            </>
-        );
-    };
-
-    const phoneBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Phone</span>
-                {rowData.phone}
-            </>
-        );
-    };
-
     const dobBodyTemplate = (rowData) => {
         return (
             <>
@@ -120,13 +123,16 @@ const EmployeesData = () => {
         );
     };
 
-    const actionBodyTemplate = (rowData) => {
+    const actionBodyTemplate = (rowData) => {      
         return (
             <div className="actions">
+                 <Link to={`/new-assets-assign/${rowData.id}`}>
+                    <Button label="Assignment" className="p-button-rounded p-button-primary mt-2 mr-2" />
+                </Link> 
                 <Link to={`/update-employee/${rowData.id}`}>
                     <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mt-2 mr-2" />
                 </Link>
-                <Link to={`/employee/${rowData.id}`}>
+                <Link to={`/nksjhduihiofnrklcnmf/${rowData.uniqueId}`}>
                     <Button icon="pi pi-info-circle" className="p-button-rounded p-button-info mt-2 mr-2" />
                 </Link>
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-danger mt-2 mr-2" onClick={() => confirmDeleteEmployee(rowData)} />
@@ -177,15 +183,14 @@ const EmployeesData = () => {
                         emptyMessage="No Employees found."
                         header={header}
                         responsiveLayout="scroll">
-
-
+                        
                         <Column style={{ display: 'none'}} field="id" header="ID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
+                        <Column style={{ display: 'none'}} field="uniqueId" header="UNIQUEID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="employeeUniqueId" header="Employee ID" sortable body={codeBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
+                        <Column  header="Barcode" body={imageBodyTemplate} headerStyle={{ minWidth: '10%'}}></Column>
                         <Column field="firstName" header="First Name" sortable body={fnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="lastName" header="Last Name" sortable body={lnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="description" header="Department" body={dobBodyTemplate} sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column field="email" header="Email Address" sortable body={emailAddressBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column field="phone" header="Phone" body={phoneBodyTemplate} sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 

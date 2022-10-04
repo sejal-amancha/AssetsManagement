@@ -10,7 +10,7 @@ const Category = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { id } = useParams(); 
-    const categorySingle = useSelector((state) => state.categoryDetails.categoryDetails);
+    const categorySingle = useSelector((state) => state?.categoryDetails?.categoryDetails);
     let status = categorySingle.isActive == true ? "active" : "Inactive";
 
     useEffect(() => {

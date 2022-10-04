@@ -8,7 +8,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
 
 const Allocation = () => {
     let newAllocationID = {
@@ -23,7 +24,7 @@ const Allocation = () => {
     const [productDialog, setProductDialog] = useState(false);
     const [deleteAllocationDialog, setDeleteAllocationDialog] = useState(false);
     const [dialogBox, setDialogBox] = useState(false);
-    
+
     useEffect(() => {
         dispatch(loadAllocationStart());
     }, []);
@@ -99,7 +100,9 @@ const Allocation = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
+                    <Link to={`/new-assets-assign`}>
+                        <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" />
+                    </Link>
                 </div>
             </React.Fragment>
         )
@@ -215,16 +218,15 @@ const Allocation = () => {
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Allocations"
                         globalFilter={globalFilter} emptyMessage="No Allocations found." header={header} responsiveLayout="scroll">
 
-                        <Column field="combo_id" header="Combo ID" body={comboIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="employee_id" header="Employee Id" body={employeeIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="first_name" header="First Name" body={eFirstNameTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="last_name" header="Last Name" body={eLastNameTemplate} sortable  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>  
-                        <Column field="created_at" header="Created at" body={creationAtTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="updated_at" header="Updated at" body={updatedAtTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="assignment_id" header="Assignment ID" body={comboIdTemplate} sortable  headerStyle={{ width: '14%', minWidth: '12rem' }}></Column>
+                        <Column field="first_name" header="Employee Name" body={eFirstNameTemplate} sortable  headerStyle={{ width: '14%', minWidth: '15rem' }}></Column>
+                        <Column field="ItemName" header="Item Name" body={eLastNameTemplate} sortable  headerStyle={{ width: '14%', minWidth: '15rem' }}></Column>  
+                        {/* <Column field="created_at" header="Created at" body={creationAtTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="updated_at" header="Updated at" body={updatedAtTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column> */}
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable> 
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Creating New Combo" modal className="p-fluid" footer={dialogBox ? addAllocationFooter : updateAllocationFooter} onHide={hideDialog}>
+                    {/* <Dialog visible={productDialog} style={{ width: '450px' }} header="Creating New Combo" modal className="p-fluid" footer={dialogBox ? addAllocationFooter : updateAllocationFooter} onHide={hideDialog}>
                         <div className="field">  
                             <label htmlFor="name">Select Employee First</label>
                             <select 
@@ -246,7 +248,7 @@ const Allocation = () => {
                             }
                    </select>
                         </div>       
-                    </Dialog>  
+                    </Dialog>   */}
 
 
                     <Dialog visible={deleteAllocationDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteAllocationDialogFooter} onHide={hideDeleteAllocationDialog}>

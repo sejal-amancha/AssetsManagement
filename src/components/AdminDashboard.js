@@ -23,18 +23,16 @@ import EmployeesData from './menu/EmployeesData';
 import Categories from './menu/Categories';
 import Departments from './menu/Departments';
 import Products from './menu/Products';
-import Combos from './menu/Combos';
 import Allocations from './menu/Allocation'
 import Product from '../pages/SingleViews/Product';
 import Category from '../pages/SingleViews/Category';
-import Combo from '../pages/SingleViews/Combo';
 import AddEditProduct from '../pages/EditComponent/AddEditProduct';
 import Employee from '../pages/SingleViews/Employee';
-import Stocks from './menu/Stocks';
 import AddUser from '../pages/EditComponent/AddUser';
 import AddEditCategory from '../pages/EditComponent/AddEditCategory';
 import AddEditDepartment from '../pages/EditComponent/AddEditDepartment';
 import Department from '../pages/SingleViews/Department';
+import AddUpdateAssignment from '../pages/EditComponent/AddUpdateAssignment';
 
 
 const AdminDashboard = () => {
@@ -48,7 +46,7 @@ const AdminDashboard = () => {
 
     let menuClick = false;
     let mobileTopbarMenuClick = false;
-
+     
     useEffect(() => {
         if (mobileMenuActive) {
             addClass(document.body, "body-overflow-hidden");
@@ -138,8 +136,6 @@ const AdminDashboard = () => {
                 { label: 'DEPARTMENTS', icon: 'pi pi-fw pi-tag', to: '/admindashboard/departments' } ,
                 { label: 'EMPLOYEES INFO', icon: 'pi pi-fw pi-user-edit' , to: '/admindashboard/employees' },
                 { label: 'ASSETS INFO', icon: 'pi pi-fw pi-id-card', to: '/admindashboard/assets' },
-                { label: 'GET ALLOCATIONS', icon: 'pi pi-fw pi-tag', to: '/admindashboard/allocations' }, 
-                { label: 'COMBOS ASSIGN', icon: 'pi pi-fw pi-bookmark', to: '/admindashboard/combos' }, 
             ]
         },
     ];
@@ -184,14 +180,12 @@ const AdminDashboard = () => {
                     <Route path="/admindashboard/categories" component={Categories} />
                     <Route path="/admindashboard/departments" component={Departments} />
                     <Route path="/admindashboard/assets" component={Products} />
-                    <Route path="/admindashboard/allocations" component={Allocations} />
-                    <Route path="/admindashboard/combos" component={Combos} />   
-                    <Route path="/admindashboard/stocks" component={Stocks} />
-                    <Route path="/employee/:id" component={Employee} />
+                    <Route path="/admindashboard/asset-assignment" component={Allocations} />
+                    {/* <Route path="/admindashboard/stocks" component={Stocks} /> */}
+                    <Route path="/nksjhduihiofnrklcnmf/:uniqueId" component={Employee} />
                     <Route path="/category/:id" component={Category} />
                     <Route path="/department/:id" component={Department} />
                     <Route path="/asset/:id" component={Product} />
-                    <Route path="/combo/:id" component={Combo} />
                     <Route path="/addnew-employee" component={AddUser} />
                     <Route path="/update-employee/:id" component={AddUser}/>
                     <Route path="/addnew-asset" component={AddEditProduct} />
@@ -200,6 +194,8 @@ const AdminDashboard = () => {
                     <Route path="/update-category/:id" component={AddEditCategory} />
                     <Route path="/addnew-department" component={AddEditDepartment} />
                     <Route path="/update-department/:id" component={AddEditDepartment} />
+                    <Route path="/new-assignment/:id" component={AddUpdateAssignment} />
+                    <Route path="/new-assets-assign/:id" component={AddUpdateAssignment}  />
                 </div>
 
                 <AppFooter  />

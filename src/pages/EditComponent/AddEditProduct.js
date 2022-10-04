@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Toolbar } from "primereact/toolbar";
 import { Dropdown } from "primereact/dropdown";
-import { InputNumber } from 'primereact/inputnumber'
+import { RadioButton } from 'primereact/radiobutton';
 import { Calendar } from "primereact/calendar";
 
 import { addnewProductStart } from "../../redux/Actions/productActions";
@@ -13,6 +13,8 @@ import { loadProductsStart, updateProductStart } from "../../redux/Actions/produ
 import { loadCategoriesStart } from "../../redux/Actions/categoryActions";
 import classNames from "classnames";
 import { InputTextarea } from "primereact/inputtextarea";
+import { MultiSelect } from "primereact/multiselect";
+import { InputNumber } from "primereact/inputnumber";
 
 const emptyData = {
     itemName: "",
@@ -21,11 +23,12 @@ const emptyData = {
     cost: "",
     datePurchased: "",
     qty: "1",
+    typeOfAsset : ""
 };
 
 const AddEditProduct = () => {
     const [product, setProduct] = useState(emptyData);
-    var { id, itemName, description, categoryId, qty, cost, datePurchased } = product;
+    var { id, itemName, description, categoryId , cost, datePurchased ,typeOfAsset} = product;
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -63,7 +66,7 @@ const AddEditProduct = () => {
        
         if (!editMode) {
             setProduct(product);
-            if(product.itemName && product.categoryId && product.description && product.cost) {
+            if(product.itemName && product.categoryId && product.description && product.cost ) {
                 dispatch(addnewProductStart(product));
                 setTimeout(() => {
                     history.push('/admindashboard/assets')
@@ -115,14 +118,26 @@ const AddEditProduct = () => {
             <div className="col-12 md:col-6">
                 <div className="card p-fluid">
                     <div className="field">
-                        <label htmlFor="name">Product Name</label>
+                        <label htmlFor="name">Asset Name</label>
                         <InputText id="product_name" value={itemName} onChange={(e) => onInputChange(e, "itemName")} className={classNames({ "p-invalid": submitted && !product.itemName })} required autoFocus />
                         {submitted && !product.itemName && <small className="p-error">Product Name is required.</small>}
                     </div>
                     <div className="field">
-                        <label htmlFor="name">product Description</label>
+                        <label htmlFor="name">Asset Description</label>
                         <InputTextarea id="description" value={description} onChange={(e) => onInputChange(e, "description")} className={classNames({ "p-invalid": submitted && !product.description })} required autoFocus />
                         {submitted && !product.description && <small className="p-error">Product Description is required.</small>}
+                    </div>
+                    <div className="field">
+                        <label htmlFor="name">Type of Asset</label>
+                            <div className="field-radiobutton">
+                                <RadioButton id="typeOfAsset" name="typeOfAsset" value="inhouse" onChange={(e) => onInputChange(e, "typeOfAsset")} checked={typeOfAsset === 'inhouse'} />
+                                <label htmlFor="outsource">InHouse</label>
+                            </div>
+                            <div className="field-radiobutton">
+                                <RadioButton id="typeOfAsset" name="typeOfAsset" value="outsource" onChange={(e) => onInputChange(e, "typeOfAsset")} checked={typeOfAsset === 'outsource'} />
+                                <label htmlFor="outsource">OutSource</label>
+                            </div>
+                        {submitted && !product.typeOfAsset && <small className="p-error">Must Select Type of Assets.</small>}
                     </div>
                     <div className="formgrid grid">
                         <div className="field col">
@@ -132,35 +147,23 @@ const AddEditProduct = () => {
                                 optionValue="id"
                                 placeholder="Choose a Category"
                                 optionLabel="categoryName">
-                                {/* {categoriess
-                                    ? categoriess.map((catItem) =>
-                                        catItem.isActive === true ? (
-                                            options={catItem}
-                                            optionValue=`${catItem.id}`
-                                            placeholder="choose"
-                                            optionLabel="catItem.categoryName"
-                                           
-                                        ) : null
-                                    )
-                                    : null} > */}
                             </Dropdown>
                             {submitted && !product.categoryId && <small className="p-error">Select Category </small>}
                         </div>
-                        <div className="field col">
+                        {/* <div className="field col">
                             <label htmlFor="integeronly">Quantity</label>
                             <InputNumber inputId="integeronly" id="qty" value={qty} onChange={(e) => onInputChange(e, "qty")} className={classNames({ "p-invalid": submitted && !product.qty })} required autoFocus mode="decimal" useGrouping={false}  />
                             {submitted && !product.qty && <small className="p-error">Product Quantity is required.</small>}    
-                        </div>
+                        </div> */}
                     </div>
                     <div className="formgrid grid">
                         <div className="field col">
-                            <label htmlFor="name">Product Cost</label>
+                            <label htmlFor="name">Asset Cost</label>
                             <InputText id="cost" value={cost} onChange={(e) => onInputChange(e, "cost")} className={classNames({ "p-invalid": submitted && !product.cost })} required autoFocus  />
                             {submitted && !product.cost && <small className="p-error">Provide Cost of the Product </small>}
                         </div>
-                        <div className="field col">
-                            
-                            <label htmlFor="name">Product Purchase Date</label>
+                        <div className="field col"> 
+                            <label htmlFor="name">Asset Purchase Date</label>
                             <Calendar showIcon showButtonBar value={new Date(datePurchased) || ""} onChange={(e) => onInputChange(e, "datePurchased")} className={classNames({ "p-invalid": submitted && !product.datePurchased })}></Calendar>
                             {submitted && !product.datePurchased && <small className="p-error">Purchase Date of Product id Required </small>}
                         </div>

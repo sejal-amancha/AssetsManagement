@@ -10,7 +10,7 @@ import { Toolbar } from "primereact/toolbar";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Link } from "react-router-dom";
-import Image1 from '../../assets/Image/computer_pc_PNG7719.png'
+
 
 const Products = () => {
     let itemData = []
@@ -25,7 +25,7 @@ const Products = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dt = useRef(null);
-    const productss = useSelector((state) => state.product.productss.rows);
+    const productss = useSelector((state) => state?.product?.productss?.rows);
     
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
@@ -98,15 +98,6 @@ const Products = () => {
         );
     };
 
-    const imageBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Item Barcode</span>
-                <img src={Image1} alt="Image" className="shadow-2" width="80" />
-            </>
-        )
-    }
-
     const pDescBodyTemplate = (rowData) => {
         return (
             <>
@@ -125,16 +116,26 @@ const Products = () => {
         );
     };
 
+    const ItemStatusBodyTemplate = (rowData) => {
+        let statusData =  rowData.isAssigned === false ? "Available" : "Assigned" 
+        return (
+            <>
+                <span className="p-column-title">Asset Status</span>
+                <span className={`product-badge status-${rowData.isAssigned}`}>{statusData}</span>
+            </>
+        );
+    };
+
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="actions">
                 <Link to={`/update-asset/${rowData.id}`}>
-                    <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" />
+                    <Button icon="pi pi-pencil" className="p-button-rounded p-button-success  mt-2 mr-2" />
                 </Link> 
                 <Link to={`/asset/${rowData.id}`}>
-                    <Button icon="pi pi-info-circle" className="p-button-rounded p-button-info mr-2" />
+                    <Button icon="pi pi-info-circle" className="p-button-rounded p-button-info  mt-2 mr-2" />
                 </Link>
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger mt-2" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger mt-2 mr-2" onClick={() => confirmDeleteProduct(rowData)} />
             </div>
         );
     };
@@ -184,12 +185,12 @@ const Products = () => {
                         header={header}
                         responsiveLayout="scroll"
                     >
-                        <Column style={{ display: 'none' }} field="id" header="ID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column field="itemTag" header="Item ID" sortable body={pIdBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column  header="Image" body={imageBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="itemName" header="Asset Name" sortable body={pnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "12rem" }}></Column>
+                        <Column style={{ display: 'none' }} field="id" header="ID" sortable headerStyle={{ minWidth: "10rem" }}></Column>
+                        <Column field="itemTag" header="Item ID" sortable body={pIdBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
+                        <Column field="itemName" header="Asset Name" sortable body={pnameBodyTemplate} headerStyle={{ minWidth: "12rem" }}></Column>
                         <Column field="description" header="Asset Description" sortable body={pDescBodyTemplate} headerStyle={{ width: "14%", minWidth: "12rem" }}></Column>
-                        <Column field="category" header="Asset Category" body={categoryIdBodyTemplate} sortable headerStyle={{ width: "14%", minWidth: "12rem" }}></Column>
+                        <Column field="category" header="Asset Category" body={categoryIdBodyTemplate} sortable headerStyle={{ minWidth: "12rem" }}></Column>
+                        <Column field="isAssigned" header="Asset Status" body={ItemStatusBodyTemplate} sortable headerStyle={{ minWidth: "12rem" }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 

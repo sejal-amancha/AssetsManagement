@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 
 const ChangePassword = () => {
 
-    const users = useSelector((state) => state.data.changePass);
+    const users = useSelector((state) => state?.data?.changePass);
     const [submitted, setSubmitted] = useState(false)
     const dispatch = useDispatch();
 
@@ -49,11 +49,9 @@ const ChangePassword = () => {
                 <div className="card w-30rem ">
                 
                 <div className="flex justify-content-center">
-                    <img src='assets/layout/images/logo-dark.svg' alt="logo" />
+                    <img src='assets/layout/images/koli-logo.png' alt="logo"  style={{ width:'50%'}}/>
                 </div>
-               
                     <h3 className="text-center mb-8">Change Password</h3>
-
                     <form onSubmit={handleSubmit} className="p-fluid">
                         <div className="formgrid grid">
                             <div className="field col">

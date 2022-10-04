@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const token = JSON.parse(localStorage.getItem("ADMIN"));
+const token = JSON.parse(sessionStorage.getItem("ADMIN"));
 const headersParam = {
-    Authorization: `Bearer ${token}`,
+    "Authorization" : `Bearer ${token}`,
 };
 
 export const adminLoginApi = async (user) => await axios.post(`http://localhost:9091/api/user/login`, user);
@@ -11,7 +11,7 @@ export const adminChangePassApi = async (adminPass) => await axios.post(`http://
 
 export const adminLogoutApi = async () => await axios.delete(`http://localhost:9091/api/user/logout`, { headers: headersParam });
 
-export const loadUsersApi = async () => await axios.get(`http://localhost:9091/api/employee/`);
+export const loadUsersApi = async () => await axios.get(`http://localhost:9091/api/employee/`, { headers: headersParam });
 
 export const addEmployeeApi = async (newEmployee) => await axios.post(`http://localhost:9091/api/employee/create`, newEmployee, { headers: headersParam });
 
@@ -19,6 +19,8 @@ export const updateEmployeeApi = async (updateEmployee) => await axios.put(`http
 
 export const deleteEmployeeApi = async (deleteEmployee) => await axios.delete(`http://localhost:9091/api/employee/${deleteEmployee.payload.id}`, { headers: headersParam });
 
-export const getSingleEmployeeApi = async (singlemployee) => await axios.get(`http://localhost:9091/api/employee/${singlemployee}`, { headers : headersParam} );
+export const getSingleEmployeeApi = async (singlemployee) => await axios.get(`http://localhost:9091/api/employee/askldts/${singlemployee}` );
+
+export const getSingleEmployeeAssignmentApi = async (singlemployeeAssignment) => await axios.get(`http://localhost:9091/api/employee/combo-details/${singlemployeeAssignment}`, { headers : headersParam});
 
 

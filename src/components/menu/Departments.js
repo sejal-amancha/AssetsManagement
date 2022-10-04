@@ -21,7 +21,7 @@ const Departments = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dt = useRef(null);
-    const departmentsList = useSelector((state) => state?.department?.departments);
+    const departmentsList = useSelector((state) => state?.department?.departments?.rows);
 
     const [department, setDepartment] = useState(emptyDepartment)
     const [globalFilter, setGlobalFilter] = useState(null);
@@ -161,7 +161,7 @@ const Departments = () => {
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Departments"
                     globalFilter={globalFilter}
-                    emptyMessage="No Categories found."
+                    emptyMessage="No Deparments found."
                     header={header}
                     responsiveLayout="scroll"
                 >

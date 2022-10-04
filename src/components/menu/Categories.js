@@ -157,7 +157,7 @@ const Categories = () => {
 
                         <Column style={{ display: "none" }} field="id" header="ID" sortable body={cIdBodyTemplate} headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
                         <Column field="categoryName" header="Category Name" sortable body={cnameBodyTemplate} headerStyle={{ width: "10%", minWidth: "20rem" }}></Column>
-                        <Column field="description" header="Description" sortable body={cdescriptionBodyTemplate} headerStyle={{ width: "10%", minWidth: "30rem" }}></Column>
+                        <Column field="description" header="Description" sortable body={cdescriptionBodyTemplate} headerStyle={{ width: "10%", minWidth: "20rem" }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 

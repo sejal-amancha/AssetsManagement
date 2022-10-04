@@ -113,7 +113,7 @@ const AddEditCategory = () => {
                         <div className="field col">
                             <Button label={!editMode ? "Add" : "UPDATE"} icon="pi pi-check" className="p-button-warning mr-2 mb-2" onClick={addUpdateCategory} />
                         </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>

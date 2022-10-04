@@ -99,6 +99,21 @@ export const getSingleEmployeeError = (error) => ({
     payload: error,
 })
 
+export const getSingleEmployeeAssignemntStart = (singleEmployeeItem) => ({
+    type: types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_START,
+    payload: singleEmployeeItem,
+});
+
+export const getSingleEmployeeAssignemntSuccess = (singleEmployeeItem) => ({
+    type: types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_SUCCESS,
+    payload: singleEmployeeItem,
+});
+
+export const getSingleEmployeeAssignemntError = (error) => ({
+    type: types.GET_SINGLE_EMPLOYEE_ASSIGNMENT_ERROR,
+    payload: error,
+});
+
 export const deleteEmployeeStart = (employeeId) => ({
     type: types.DELETE_EMPLOYEE_START,
     payload: employeeId,
@@ -113,3 +128,4 @@ export const deleteEmployeeError = (error) => ({
     type: types.DELETE_EMPLOYEE_ERROR,
     payload: error,
 });
+

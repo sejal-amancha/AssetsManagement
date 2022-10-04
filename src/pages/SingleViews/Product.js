@@ -9,8 +9,7 @@ const Product = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { id } = useParams();
-    const getsingleProduct = useSelector((state) => state.singleProduct.singleProduct)
-    console.log("SINGLE DATA SHOWW~~~~~>>>>",getsingleProduct)
+    const getsingleProduct = useSelector((state) => state?.singleProduct?.singleProduct)
     
     useEffect(() => {
         dispatch(getSingleProductStart(id));
@@ -53,6 +52,10 @@ const Product = () => {
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Description</div>
                  <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.description}</div>   
+             </li>
+             <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
+                 <div className="text-500 text-2xl w-6 md:w-3 font-medium">Type</div>
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.typeOfAsset}</div>   
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Category</div>

@@ -66,32 +66,10 @@ function* onUpdateProductStartAsync({ payload }) {
                 title: response.data.message,
             });
         } else { 
-            if (payload.product_name === '') {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.product_name,
-                });
-            }  else if (payload.category_id === '') {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.category_id,
-                });
-            } else if (payload.product_description === '') {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.product_description,
-                });
-            } else if (payload.purchase_date === '') {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.purchase_date,
-                });
-            } else {
-                Toast.fire({
-                    icon: "error",
-                    title: response.data.errors.product_cost,
-                });
-            }
+            Toast.fire({
+                icon: "error",
+                title: response.data.message,
+            });
         }
     } catch (error) {
             yield put(updateProductError(error.response));
