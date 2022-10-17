@@ -134,7 +134,7 @@ const AdminDashboard = () => {
             items: [
                 { label: 'CATEGORIES', icon: 'pi pi-fw pi-bars',  to: '/admindashboard/categories'},  
                 { label: 'DEPARTMENTS', icon: 'pi pi-fw pi-tag', to: '/admindashboard/departments' } ,
-                { label: 'EMPLOYEES INFO', icon: 'pi pi-fw pi-user-edit' , to: '/admindashboard/employees' },
+                { label: 'EMPLOYEES INFO', icon: 'pi pi-fw pi-users' , to: '/admindashboard/employees' },
                 { label: 'ASSETS INFO', icon: 'pi pi-fw pi-id-card', to: '/admindashboard/assets' },
             ]
         },
@@ -181,7 +181,6 @@ const AdminDashboard = () => {
                     <Route path="/admindashboard/departments" component={Departments} />
                     <Route path="/admindashboard/assets" component={Products} />
                     <Route path="/admindashboard/asset-assignment" component={Allocations} />
-                    {/* <Route path="/admindashboard/stocks" component={Stocks} /> */}
                     <Route path="/nksjhduihiofnrklcnmf/:uniqueId" component={Employee} />
                     <Route path="/category/:id" component={Category} />
                     <Route path="/department/:id" component={Department} />

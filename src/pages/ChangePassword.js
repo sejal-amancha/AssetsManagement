@@ -113,7 +113,7 @@ const ChangePassword = () => {
                                     onChange={handleChange} 
                                     toggleMask
                                     feedback={false} />  
-                                {submitted && !data.confirmPassword && <small className="p-error">Confirm Password is required.</small> || submitted && data.Password !== data.confirmPassword && <small className="p-error">Password and Confirm Password Does not match!</small>} 
+                                {submitted && !data.confirmPassword && <small className="p-error">Confirm Password is required.</small> || submitted && data.newPassword !== data.confirmPassword && <small className="p-error">Password and Confirm Password Does not match!</small>} 
                             </div>
                         </div>
 

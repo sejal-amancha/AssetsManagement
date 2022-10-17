@@ -17,8 +17,8 @@ const Employee = () => {
     let arr = []
     const assignmentsData = useSelector((state) => state.employeeDetails.singleUserAssignment);
     assignmentsData?.map((data) => {
-        // const item =  data.itemDetail
-        arr.push(data.itemDetail)
+        const item =  data.itemDetail
+        arr.push(item)
     });
     useEffect(() => {
         dispatch(getSingleEmployeeStart(uniqueId));

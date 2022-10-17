@@ -85,14 +85,14 @@ const EmployeesData = () => {
         return (
             <>
                 <span className="p-column-title">Item Barcode</span>
-                {/* <QRCode
+                <QRCode
                     size={256}
-                    style={{ height: "auto", maxWidth: "60%", width: "60%" }}
+                    style={{ height: "auto", maxWidth: "50%", width: "50%" }}
                     value={JSON.stringify(rowData)}
                     viewBox={`0 0 256 256`}
-                    /> */}
+                    />
                     
-                <Barcode value={rowData.barcode} displayValue={false} width={1} height={30} />    
+                {/* <Barcode value={rowData.barcode} displayValue={false} width={1} height={30} />     */}
             </>
         )
     }
@@ -187,7 +187,7 @@ const EmployeesData = () => {
                         <Column style={{ display: 'none'}} field="id" header="ID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column style={{ display: 'none'}} field="uniqueId" header="UNIQUEID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="employeeUniqueId" header="Employee ID" sortable body={codeBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column  header="Barcode" body={imageBodyTemplate} headerStyle={{ minWidth: '10%'}}></Column>
+                        <Column  header="QR" body={imageBodyTemplate} headerStyle={{ minWidth: '10%'}}></Column>
                         <Column field="firstName" header="First Name" sortable body={fnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="lastName" header="Last Name" sortable body={lnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="description" header="Department" body={dobBodyTemplate} sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>

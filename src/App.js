@@ -3,6 +3,7 @@ import AdminDashboard from './components/AdminDashboard';
 import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom"
+import Employee from "./pages/SingleViews/Employee";
 
 const App = () => {
     return (
@@ -13,6 +14,9 @@ const App = () => {
                     <Redirect to="/login" />
                 )}
             <Switch>
+                {/* <Route path="/nksjhduihiofnrklcnmf/:uniqueId">
+                    <Employee />
+                </Route> */}
                 <Route path="/changePass">
                     <ChangePassword />
                 </Route>
