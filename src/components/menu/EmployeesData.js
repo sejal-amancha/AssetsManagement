@@ -187,7 +187,7 @@ const EmployeesData = () => {
                         <Column style={{ display: 'none'}} field="id" header="ID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column style={{ display: 'none'}} field="uniqueId" header="UNIQUEID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="employeeUniqueId" header="Employee ID" sortable body={codeBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column  header="QR" body={imageBodyTemplate} headerStyle={{ minWidth: '10%'}}></Column>
+                        <Column  header="QR" body={imageBodyTemplate} headerStyle={{width: "14%", minWidth: "10rem"}}></Column>
                         <Column field="firstName" header="First Name" sortable body={fnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="lastName" header="Last Name" sortable body={lnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column field="description" header="Department" body={dobBodyTemplate} sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>

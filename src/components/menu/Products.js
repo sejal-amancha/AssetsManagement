@@ -179,7 +179,7 @@ const Products = () => {
                         rowsPerPageOptions={[5, 10, 25]}
                         className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} assets"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Assets"
                         globalFilter={globalFilter}
                         emptyMessage="No Assets found."
                         header={header}

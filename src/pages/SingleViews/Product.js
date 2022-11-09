@@ -63,7 +63,7 @@ const Product = () => {
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Cost</div>
-                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.cost}</div>    
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.cost}{'/-'}</div>    
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Purchase Date</div>

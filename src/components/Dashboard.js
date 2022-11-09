@@ -6,6 +6,7 @@ import { loadUsersStart } from '../redux/Actions/actions';
 import { loadCategoriesStart } from '../redux/Actions/categoryActions';
 import { loadDepartmentStart } from '../redux/Actions/departmentActions';
 import { loadProductsStart } from '../redux/Actions/productActions';
+import image1 from '../assets/demo/Images/03.jpg'
 
 const Dashboard = (props) => {
    
@@ -103,8 +104,8 @@ const Dashboard = (props) => {
     }, [props.colorMode]);
 
     return (
+    <div style={{overflowY:'hidden', overflowX: 'hidden' }}>
         <div className="grid">
-       
             <div className="col-12 lg:col-6 xl:col-3">
             <Link to="/admindashboard/employees" >
                 <div className="card mb-0">
@@ -174,6 +175,11 @@ const Dashboard = (props) => {
             </Link>
             </div>
         </div>
+
+        <div className="card align-items-center justify-content-center flex mt-3">
+            <img src={image1} alt="Image" height={'80%'} width={'60%'} className="align-items-center" style={{ borderRadius:'2%' }}/>
+        </div> 
+    </div>  
     );
 }
 

@@ -38,6 +38,10 @@ const ChangePassword = () => {
         dispatch(adminChangePasswordStart(adminChangePass));
     }
 
+    if (users.length > 0) {
+        console.log("first~~~~~~~~~", users)
+    }
+
     if (users.success === true) {
         history.push('/admindashboard');
     }

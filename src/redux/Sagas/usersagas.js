@@ -85,14 +85,13 @@ export function* onAdminChangePassAsync({ payload }) {
                 icon: "success",
                 title: response.data.message,
             });
-        } else {
-            Toast.fire({
-                icon: "error",
-                title: response.data.message,
-            });
-        }
+        } 
     } catch (error) {
         yield put(adminChangePasswordError(error.response));
+        Toast.fire({
+            icon: "error",
+            title : error.response.data.message,
+        })
     }
 }
 
@@ -117,46 +116,45 @@ export function* onAddNewEmployeeStartAsync({ payload }) {
                 icon: "success",
                 title: response.data.message,
             });
-        } else {
-            if (response.data.errors.firstName) {
+        }  
+    } catch (error) {
+        yield put(addNewEmployeeError(error.response));
+            if (error.response.data.errors.firstName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.firstName,
+                    title: error.response.data.errors.firstName,
                 });
-            } else if (response.data.errors.last_name) {
+            } else if (error.response.data.errors.last_name) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.last_name,
+                    title: error.response.data.errors.last_name,
                 });
-            } else if (response.data.errors.lastName) {
+            } else if (error.response.data.errors.lastName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.lastName,
+                    title: error.response.data.errors.lastName,
                 });
-            } else if (response.data.errors.phone) {
+            } else if (error.response.data.errors.phone) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.phone,
+                    title: error.response.data.errors.phone,
                 });
-            } else if (response.data.errors.password) {
+            } else if (error.response.data.errors.password) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.password,
+                    title: error.response.data.errors.password,
                 });
-            } else if (response.data.errors.confirmPassword) {
+            } else if (error.response.data.errors.confirmPassword) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.confirmPassword,
+                    title: error.response.data.errors.confirmPassword,
                 });
             } else {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.email,
+                    title: error.response.data.errors.email,
                 });
             }
-        }
-    } catch (error) {
-        yield put(addNewEmployeeError(error.response));
     }
 }
 
@@ -169,46 +167,45 @@ export function* onUpdateEmployeeStartAsync({ payload }) {
                 icon: "success",
                 title: response.data.message,
             });
-        } else {
-            if (response.data.errors.firstName) {
+        } 
+    } catch (error) {
+        yield put(updateEmployeeError(error.response));
+            if (error.response.data.errors.firstName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.firstName,
+                    title: error.response.data.errors.firstName,
                 });
-            } else if (response.data.errors.last_name) {
+            } else if (error.response.data.errors.last_name) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.last_name,
+                    title: error.response.data.errors.last_name,
                 });
-            } else if (response.data.errors.lastName) {
+            } else if (error.response.data.errors.lastName) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.lastName,
+                    title: error.response.data.errors.lastName,
                 });
-            } else if (response.data.errors.phone) {
+            } else if (error.response.data.errors.phone) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.phone,
+                    title: error.response.data.errors.phone,
                 });
-            } else if (response.data.errors.password) {
+            } else if (error.response.data.errors.password) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.password,
+                    title: error.response.data.errors.password,
                 });
-            } else if (response.data.errors.confirmPassword) {
+            } else if (error.response.data.errors.confirmPassword) {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.confirmPassword,
+                    title: error.response.data.errors.confirmPassword,
                 });
             } else {
                 Toast.fire({
                     icon: "error",
-                    title: response.data.errors.email,
+                    title: error.response.data.errors.email,
                 });
             }
-        }
-    } catch (error) {
-        yield put(updateEmployeeError(error.response));
     }
 }
 

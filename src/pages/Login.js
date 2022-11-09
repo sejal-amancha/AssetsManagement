@@ -14,11 +14,12 @@ const Login = () => {
         email: "",
         password: "",
     });
-    useEffect(() => {
-        if(submitted){
-            dispatch(adminLoginStart(data));
-        }
-    }, [submitted]);
+    
+    // useEffect(() => {
+    //     if(submitted){
+    //         dispatch(adminLoginStart(data));
+    //     }
+    // }, [submitted]);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -39,11 +40,11 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-        // if (submitted) {
-        //     return dispatch(adminLoginStart(data));
-        // }
+        setData(data);
+        dispatch(adminLoginStart(data));
     };
-    if (users.message === "Login successful") {
+
+    if (users?.message === "Login successful") {
         history.push("/admindashboard");
         window.location.reload();
     }
