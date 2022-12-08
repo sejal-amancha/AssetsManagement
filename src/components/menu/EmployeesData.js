@@ -72,15 +72,6 @@ const EmployeesData = () => {
         );
     };
 
-    const codeBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Id</span>
-                {rowData.employeeUniqueId}
-            </>
-        );
-    };
-
     const imageBodyTemplate = (rowData) => {
         return (
             <>
@@ -97,48 +88,31 @@ const EmployeesData = () => {
         )
     }
 
-    const fnameBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">FirstName</span>
-                {rowData.firstName}
-            </>
-        );
-    };
-    const lnameBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">LastName</span>
-                {rowData.lastName}
-            </>
-        );
-    };
-
-    const dobBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">DOB</span>
-                {rowData?.departmentDetails?.name || "NULL"}
-            </>
-        );
-    };
-
     const actionBodyTemplate = (rowData) => {      
         return (
             <div className="actions">
-                 <Link to={`/new-assets-assign/${rowData.id}`}>
+                 {/* <Link to={`/new-assets-assign/${rowData.id}`}>
                     <Button label="Assignment" className="p-button-rounded p-button-primary mt-2 mr-2" />
-                </Link> 
+                </Link>  */}
                 <Link to={`/update-employee/${rowData.id}`}>
                     <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mt-2 mr-2" />
                 </Link>
-                <Link to={`/nksjhduihiofnrklcnmf/${rowData.uniqueId}`}>
+                <Link to={`/employee/${rowData.id}`}>
                     <Button icon="pi pi-info-circle" className="p-button-rounded p-button-info mt-2 mr-2" />
                 </Link>
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-danger mt-2 mr-2" onClick={() => confirmDeleteEmployee(rowData)} />
             </div>
         );
     };
+
+    const empDepartmentdetails = (rowData) => {
+           return (
+                <>
+                    <span className="p-column-title">Department</span>
+                    {rowData?.departmentDetails?.name}
+                </> 
+            );
+        };
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -186,11 +160,11 @@ const EmployeesData = () => {
                         
                         <Column style={{ display: 'none'}} field="id" header="ID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column style={{ display: 'none'}} field="uniqueId" header="UNIQUEID" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column field="employeeUniqueId" header="Employee ID" sortable body={codeBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column  header="QR" body={imageBodyTemplate} headerStyle={{width: "14%", minWidth: "10rem"}}></Column>
-                        <Column field="firstName" header="First Name" sortable body={fnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column field="lastName" header="Last Name" sortable body={lnameBodyTemplate} headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
-                        <Column field="description" header="Department" body={dobBodyTemplate} sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
+                        <Column field="employeeUniqueId" header="Employee ID" sortable  headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
+                        {/* <Column  header="QR" body={imageBodyTemplate} headerStyle={{width: "14%", minWidth: "10rem"}}></Column> */}
+                        <Column field="firstName" header="First Name" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
+                        <Column field="lastName" header="Last Name" sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
+                        <Column field="name" header="Department" body={empDepartmentdetails} sortable headerStyle={{ width: "14%", minWidth: "10rem" }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 

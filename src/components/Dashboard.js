@@ -16,8 +16,7 @@ const Dashboard = (props) => {
     const productss = useSelector((state) => state?.product?.productss?.count);
     const categoriess = useSelector((state) => state?.category?.categories?.count);
     const departmentsList = useSelector((state) => state?.department?.departments?.count);
-    // console.log("departmentsList!~~~~~~~~~~~~", departmentsList)
-
+   
     useEffect(() => {
         dispatch(loadUsersStart());
     }, []);

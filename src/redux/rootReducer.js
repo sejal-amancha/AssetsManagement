@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
     allocation: allocationReducer,
     combo: comboReducer,
     comboDetails: comboReducer,
+    items: comboReducer,
 })
 
 export default rootReducer;

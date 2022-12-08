@@ -54,6 +54,10 @@ const Product = () => {
                  <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.description}</div>   
              </li>
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
+                 <div className="text-500 text-2xl w-6 md:w-3 font-medium">Serial Number</div>
+                 <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.serialNo}</div>   
+             </li>
+             <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Type</div>
                  <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{getsingleProduct?.typeOfAsset}</div>   
              </li>

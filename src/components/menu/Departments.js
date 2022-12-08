@@ -67,42 +67,6 @@ const Departments = () => {
         </>
     );
 
-    const dIDBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">DepartmentID</span>
-                {rowData.id}
-            </>
-        )
-    }
-
-    const dUniqueIdBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Department Unique ID</span>
-                {rowData.departmentUniqueId}
-            </>
-        )
-    }
-
-    const dNameBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Department Name</span>
-                {rowData.name}
-            </>
-        );
-    };
-
-    const dDescriptionBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Department Description</span>
-                {rowData.description}
-            </>
-        )
-    }
-
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
@@ -165,10 +129,10 @@ const Departments = () => {
                     header={header}
                     responsiveLayout="scroll"
                 >
-                        <Column style={{ display:'none' }} field="id" header="Department ID" sortable body={dIDBodyTemplate}  headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
-                        <Column field="departmentUniqueId" header="Department ID" body={dUniqueIdBodyTemplate} sortable headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
-                        <Column field="name" header="Department Name" body={dNameBodyTemplate} sortable  headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
-                        <Column field="description" header="Department Description" body={dDescriptionBodyTemplate} sortable headerStyle={{ width: "10%", minWidth: "20rem" }}></Column>
+                        <Column style={{ display:'none' }} field="id" header="Department ID" sortable headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
+                        <Column field="departmentUniqueId" header="Department ID" sortable headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
+                        <Column field="name" header="Department Name" sortable headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
+                        {/* <Column field="description" header="Department Description" sortable headerStyle={{ width: "10%", minWidth: "20rem" }}></Column> */}
                       
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>

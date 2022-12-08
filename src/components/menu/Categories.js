@@ -80,24 +80,6 @@ const Categories = () => {
         );
     };
 
-    const cnameBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Category Name</span>
-                {rowData.categoryName}
-            </>
-        );
-    };
-
-    const cdescriptionBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Category Description</span>
-                {rowData.description}
-            </>
-        );
-    };
-
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="actions">
@@ -156,8 +138,8 @@ const Categories = () => {
                         responsiveLayout="scroll" >
 
                         <Column style={{ display: "none" }} field="id" header="ID" sortable body={cIdBodyTemplate} headerStyle={{ width: "10%", minWidth: "15rem" }}></Column>
-                        <Column field="categoryName" header="Category Name" sortable body={cnameBodyTemplate} headerStyle={{ width: "10%", minWidth: "20rem" }}></Column>
-                        <Column field="description" header="Description" sortable body={cdescriptionBodyTemplate} headerStyle={{ width: "10%", minWidth: "20rem" }}></Column>
+                        <Column field="categoryName" header="Category Name" sortable headerStyle={{ width: "10%", minWidth: "20rem" }}></Column>
+                        {/* <Column field="description" header="Description" sortable headerStyle={{ width: "10%", minWidth: "20rem" }}></Column> */}
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 

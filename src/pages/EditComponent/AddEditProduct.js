@@ -13,11 +13,10 @@ import { loadProductsStart, updateProductStart } from "../../redux/Actions/produ
 import { loadCategoriesStart } from "../../redux/Actions/categoryActions";
 import classNames from "classnames";
 import { InputTextarea } from "primereact/inputtextarea";
-import { MultiSelect } from "primereact/multiselect";
-import { InputNumber } from "primereact/inputnumber";
 
 const emptyData = {
     itemName: "",
+    serialNo: "",
     description: "",
     categoryId: "",
     cost: "",
@@ -28,7 +27,7 @@ const emptyData = {
 
 const AddEditProduct = () => {
     const [product, setProduct] = useState(emptyData);
-    var { id, itemName, description, categoryId , cost, datePurchased ,typeOfAsset} = product;
+    var { id, itemName ,description, serialNo, categoryId , cost, datePurchased ,typeOfAsset} = product;
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -36,8 +35,7 @@ const AddEditProduct = () => {
 
     const productss = useSelector((state) => state?.product?.productss?.rows);
     const categoriess = useSelector((state) => state?.category?.categories?.rows);
-    // console.log("Categoriess data~~~~>>>>", categoriess)
-
+   
     const [submitted, setSubmitted] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
@@ -120,12 +118,17 @@ const AddEditProduct = () => {
                     <div className="field">
                         <label htmlFor="name">Asset Name</label>
                         <InputText id="product_name" value={itemName} onChange={(e) => onInputChange(e, "itemName")} className={classNames({ "p-invalid": submitted && !product.itemName })} required autoFocus />
-                        {submitted && !product.itemName && <small className="p-error">Product Name is required.</small>}
+                        {submitted && !product.itemName && <small className="p-error">Asset Name is required.</small>}
+                    </div>
+                    <div className="field">
+                        <label htmlFor="name">Asset Serial Number</label>
+                        <InputText id="product_name" value={serialNo} onChange={(e) => onInputChange(e, "serialNo")} className={classNames({ "p-invalid": submitted && !product.serialNo })} required  />
+                        {submitted && !product.serialNo && <small className="p-error">Asset Serial Number is required.</small>}
                     </div>
                     <div className="field">
                         <label htmlFor="name">Asset Description</label>
-                        <InputTextarea id="description" value={description} onChange={(e) => onInputChange(e, "description")} className={classNames({ "p-invalid": submitted && !product.description })} required autoFocus />
-                        {submitted && !product.description && <small className="p-error">Product Description is required.</small>}
+                        <InputTextarea id="description" value={description} onChange={(e) => onInputChange(e, "description")} className={classNames({ "p-invalid": submitted && !product.description })} required  />
+                        {submitted && !product.description && <small className="p-error">Asset Description is required.</small>}
                     </div>
                     <div className="field">
                         <label htmlFor="name">Type of Asset</label>
@@ -137,12 +140,15 @@ const AddEditProduct = () => {
                                 <RadioButton id="typeOfAsset" name="typeOfAsset" value="outsource" onChange={(e) => onInputChange(e, "typeOfAsset")} checked={typeOfAsset === 'outsource'} />
                                 <label htmlFor="outsource">OutSource</label>
                             </div>
-                        {submitted && !product.typeOfAsset && <small className="p-error">Must Select Type of Assets.</small>}
+                        {submitted && product.typeOfAsset !== 'outsource' && product.typeOfAsset != 'inhouse'  && <small className="p-error">Must Select Type of Asset</small> } 
                     </div>
                     <div className="formgrid grid">
                         <div className="field col">
                             <label htmlFor="name">Category Belongs to</label>
-                            <Dropdown className={classNames({ "p-invalid": submitted && !product.categoryId })} value={categoryId} id="categoryId"  onChange={(e) => onInputChange(e, "categoryId")} required autoFocus
+                            <Dropdown 
+                            className={classNames({ "p-invalid": submitted && !product.categoryId })} 
+                                value={categoryId} id="categoryId"  
+                                onChange={(e) => onInputChange(e, "categoryId")} required 
                                 options={categoriess}
                                 optionValue="id"
                                 placeholder="Choose a Category"
@@ -150,22 +156,17 @@ const AddEditProduct = () => {
                             </Dropdown>
                             {submitted && !product.categoryId && <small className="p-error">Select Category </small>}
                         </div>
-                        {/* <div className="field col">
-                            <label htmlFor="integeronly">Quantity</label>
-                            <InputNumber inputId="integeronly" id="qty" value={qty} onChange={(e) => onInputChange(e, "qty")} className={classNames({ "p-invalid": submitted && !product.qty })} required autoFocus mode="decimal" useGrouping={false}  />
-                            {submitted && !product.qty && <small className="p-error">Product Quantity is required.</small>}    
-                        </div> */}
                     </div>
                     <div className="formgrid grid">
                         <div className="field col">
                             <label htmlFor="name">Asset Cost</label>
-                            <InputText id="cost" value={cost} onChange={(e) => onInputChange(e, "cost")} className={classNames({ "p-invalid": submitted && !product.cost })} required autoFocus  />
-                            {submitted && !product.cost && <small className="p-error">Provide Cost of the Product </small>}
+                            <InputText id="cost" value={cost} onChange={(e) => onInputChange(e, "cost")} className={classNames({ "p-invalid": submitted && !product.cost })} required  />
+                            {submitted && !product.cost && <small className="p-error">Provide Cost of the Asset </small>}
                         </div>
                         <div className="field col"> 
                             <label htmlFor="name">Asset Purchase Date</label>
                             <Calendar showIcon showButtonBar value={new Date(datePurchased) || ""} onChange={(e) => onInputChange(e, "datePurchased")} className={classNames({ "p-invalid": submitted && !product.datePurchased })}></Calendar>
-                            {submitted && !product.datePurchased && <small className="p-error">Purchase Date of Product id Required </small>}
+                            {submitted && !product.datePurchased && <small className="p-error">Purchase Date of Asset id Required </small>}
                         </div>
                     </div>
                     <div className="formgrid grid">

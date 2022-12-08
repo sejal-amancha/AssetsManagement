@@ -10,12 +10,11 @@ import { InputTextarea } from 'primereact/inputtextarea';
 
 const emptyData = {
     name : "",
-    description: "",
 };
 
 const AddEditDepartment = () => {
     const [department, setDepartment] = useState(emptyData);
-    var { id, departmentUniqueId, name, description } = department;
+    var { id, departmentUniqueId, name } = department;
     const dispatch = useDispatch();
     const history = useHistory();
     var { id } = useParams();
@@ -49,14 +48,14 @@ const AddEditDepartment = () => {
 
         if (!editMode) {
             setDepartment(department);
-            if (department.name && department.description) {
+            if (department.name) {
                 dispatch(addnewDepartmentStart(department));
                 setTimeout(() => {
                     history.push('/admindashboard/departments')
                 }, 2000)
             }   
         } else {
-            if (department.name && department.description) {
+            if (department.name) {
                 dispatch(updateDepartmentStart(department));  
                 setTimeout(() => {
                     history.push('/admindashboard/departments')
@@ -100,11 +99,11 @@ const AddEditDepartment = () => {
                     <InputText id="department_name" value={name} onChange={(e) => onInputChange(e, "name")} className={classNames({ "p-invalid": submitted && !department.name })} required autoFocus />
                     {submitted && !department.name && <small className="p-error">Department Name is required.</small>}
                 </div>
-                <div className="field">
+                {/* <div className="field">
                     <label htmlFor="name">Department Description</label>
                     <InputTextarea id="department_description" value={description} onChange={(e) => onInputChange(e, "description")} className={classNames({ "p-invalid": submitted && !department.description })} required  />
                     {submitted && !department.description && <small className="p-error">Description is required</small>}
-                </div>
+                </div> */}
 
                 <div className="formgrid grid">
                         <div className="field col">

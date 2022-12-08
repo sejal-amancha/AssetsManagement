@@ -8,8 +8,9 @@ import {
 } from '../Actions/assignItemActions';
 
 import {
-    newAllocationApi,
+    newAllocationApi, updateAllocationApi,
 } from '../APIs/allocationApi';
+import { updateAllocationError, updateAllocationSuccess } from "../Actions/allocationActions";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -36,14 +37,40 @@ export function* onNewAllocationStartAsync({ payload }) {
     } catch (error) {
         yield put(newAssignError(error.response));
     }
- }
+}
+
+export function* onUpdateAllocationStartAsync({ payload }) {
+    try {
+        const response = yield call(updateAllocationApi, payload)
+        console.log("RESPOSNE~~~~~~~~>>>>", response.data)
+        if(response.data.success === true) {
+            yield put(updateAllocationSuccess(response.data));
+            Toast.fire({
+                icon: "success",
+                title: response.data.message
+            });
+        } else {
+            Toast.fire({
+                icon: "error",
+                title: response.data.message
+            });
+        }
+    } catch(error) {
+        yield put(updateAllocationError(error.response));    
+    }
+}
 
 export function* onNewAllocation() {
     yield takeLatest(types.NEW_ASSIGN_START, onNewAllocationStartAsync);
 }
 
+export function* onUpdateAllocation() {
+    yield takeLatest(types.UPDATE_ASSIGN_START, onUpdateAllocationStartAsync);
+}
+
 const allocationSagas = [
     fork(onNewAllocation),
+    fork(onUpdateAllocation),
 ];
 
 export default function* allocationSaga() {

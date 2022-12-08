@@ -10,12 +10,11 @@ import classNames from "classnames";
 
 let emptyCategory = {
     categoryName: '',
-    description: '',
 }
 
 const AddEditCategory = () => {
     const [category, setCategory] = useState(emptyCategory);
-    var { id, categoryName, description }  = category;
+    var { id, categoryName }  = category;
     const dispatch = useDispatch();
     const history = useHistory();
     var { id } = useParams();
@@ -50,14 +49,14 @@ const AddEditCategory = () => {
 
         if (!editMode) {
             setCategory(category)
-            if (category.categoryName && category.description) {
+            if (category.categoryName) {
                 dispatch(addnewCategoryStart(category)); 
                 setTimeout(() => {
                     history.push('/admindashboard/categories')
                 }, 2000)
             }   
         } else {
-            if (category.categoryName && category.description) {
+            if (category.categoryName) {
                 dispatch(updateCategoryStart(category));  
                 setTimeout(() => {
                     history.push('/admindashboard/categories')
@@ -101,11 +100,11 @@ const AddEditCategory = () => {
                         <InputText id="categoryName" value={categoryName} onChange={(e) => onInputChange(e, "categoryName")} className={classNames({ "p-invalid": submitted && !category.categoryName })} required autoFocus />
                         {submitted && !category.categoryName && <small className="p-error">Category Name is required.</small>}
                 </div>
-                <div className="field">
+                {/* <div className="field">
                         <label htmlFor="name">Category Discription</label>
                         <InputTextarea id="description" value={description} onChange={(e) => onInputChange(e, "description")} className={classNames({ "p-invalid": submitted && !category.description })} required autoResize rows="3" cols="30" />
                         {submitted && !category.description && <small className="p-error">Category Description is required.</small>}
-                </div>
+                </div> */}
                 <div className="formgrid grid">
                         <div className="field col">
                             <Button label="Cancel" icon="pi pi-times" className="p-button-secondary mr-2 mb-2" onClick={gotoPrevious} />

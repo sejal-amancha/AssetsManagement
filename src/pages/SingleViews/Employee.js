@@ -11,21 +11,23 @@ const Employee = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const { uniqueId } = useParams();
+    const { id } = useParams();
 
     const singleEmployeeData = useSelector((state) => state?.employeeDetails?.singleUser);
+    
     let arr = []
     const assignmentsData = useSelector((state) => state.employeeDetails.singleUserAssignment);
     assignmentsData?.map((data) => {
         const item =  data.itemDetail
         arr.push(item)
     });
+
     useEffect(() => {
-        dispatch(getSingleEmployeeStart(uniqueId));
+        dispatch(getSingleEmployeeStart(id));
     }, []);
 
     useEffect(() => {
-        dispatch(getSingleEmployeeAssignemntStart(uniqueId));
+        // dispatch(getSingleEmployeeAssignemntStart(uniqueId));
     }, []);
 
     const rightToolbarTemplate = () => {
@@ -41,7 +43,7 @@ const Employee = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <div className="font-medium text-4xl text-900 mb-3">{`Employee Information/${singleEmployeeData.firstName}`}</div>
+                    <div className="font-medium text-4xl text-900 mb-3">{`Employee Information/${singleEmployeeData?.firstName}`}</div>
                 </div>
             </React.Fragment>
         )

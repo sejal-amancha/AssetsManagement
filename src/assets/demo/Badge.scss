@@ -15,7 +15,7 @@
         color: #256029;
     }
 
-    &.status-unqualified {
+    &.status-false {
         background: #FFCDD2;
         color: #C63737;
     }
@@ -57,8 +57,11 @@
     }
 
     &.status-true {
-        background: #c2c2a3;
-        color: #3d3d29;
+        // background: #c2c2a3;
+        // color: #3d3d29;
+
+        background: #ECCFFF;
+        color: #694382;
     }
 
     &.status-lowstock {

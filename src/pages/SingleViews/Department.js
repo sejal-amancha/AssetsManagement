@@ -11,7 +11,7 @@ const Department = () => {
     const history = useHistory();
     const { id } = useParams(); 
     const departmentSingle = useSelector((state) =>  state?.department?.departmentsDetails);
-
+    
     useEffect(() => {
         dispatch(getSingleDepartmentStart(id));
     }, []);
@@ -51,10 +51,10 @@ const Department = () => {
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Name</div>
                  <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.name}</div>
              </li>
-             <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
+             {/* <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Description</div>
                  <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.description}</div>
-             </li>
+             </li> */}
              <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                  <div className="text-500 text-2xl w-6 md:w-3 font-medium">Created At</div>
                  <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{departmentSingle?.created_at}</div>   

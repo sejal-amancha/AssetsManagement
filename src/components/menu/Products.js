@@ -80,33 +80,6 @@ const Products = () => {
         );
     };
 
-    const pIdBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Id</span>
-                {rowData.itemTag}
-            </>
-        );
-    };
-
-    const pnameBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Product Name</span>
-                {rowData.itemName}
-            </>
-        );
-    };
-
-    const pDescBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Product Description</span>
-                {rowData.description}
-            </>
-        );
-    };
-
     const categoryIdBodyTemplate = (rowData) => {
         return (
             <>
@@ -117,12 +90,12 @@ const Products = () => {
     };
 
     const ItemStatusBodyTemplate = (rowData) => {
-        let statusData =  rowData.isAssigned === false ? "Available" : "Assigned" 
-        return (
+    let statusData =  rowData.isAssigned === false ? "Available" : "Assigned"         
+       return (
             <>
                 <span className="p-column-title">Asset Status</span>
                 <span className={`product-badge status-${rowData.isAssigned}`}>{statusData}</span>
-            </>
+            </> 
         );
     };
 
@@ -186,9 +159,9 @@ const Products = () => {
                         responsiveLayout="scroll"
                     >
                         <Column style={{ display: 'none' }} field="id" header="ID" sortable headerStyle={{ minWidth: "10rem" }}></Column>
-                        <Column field="itemTag" header="Item ID" sortable body={pIdBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
-                        <Column field="itemName" header="Asset Name" sortable body={pnameBodyTemplate} headerStyle={{ minWidth: "12rem" }}></Column>
-                        <Column field="description" header="Asset Description" sortable body={pDescBodyTemplate} headerStyle={{ width: "14%", minWidth: "12rem" }}></Column>
+                        <Column field="itemTag" header="Item ID" sortable headerStyle={{ minWidth: "10rem" }}></Column>
+                        <Column field="itemName" header="Asset Name" sortable headerStyle={{ minWidth: "12rem" }}></Column>
+                        <Column field="description" header="Asset Description" sortable  headerStyle={{ width: "14%", minWidth: "12rem" }}></Column>
                         <Column field="category" header="Asset Category" body={categoryIdBodyTemplate} sortable headerStyle={{ minWidth: "12rem" }}></Column>
                         <Column field="isAssigned" header="Asset Status" body={ItemStatusBodyTemplate} sortable headerStyle={{ minWidth: "12rem" }}></Column>
                         <Column body={actionBodyTemplate}></Column>

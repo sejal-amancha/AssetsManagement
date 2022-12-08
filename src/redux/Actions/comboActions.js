@@ -6,7 +6,7 @@ export const loadComboStart = () => ({
 
 export const loadComboSuccess = (comboData) => ({
     type: types.LOAD_COMBO_SUCCESS,
-    payload: comboData.data,
+    payload: comboData,
 });
 
 export const loadComboError = (error) => ({
@@ -57,17 +57,32 @@ export const loadComboError = (error) => ({
 //     payload: error,
 // });
 
-// export const getcomboByIdStart = (comboId) => ({
-//     type: types.GET_COMBO_BYID_START,
-//     payload: comboId,
-// });
+export const getcomboByIdStart = (comboId) => ({
+    type: types.GET_SINGLE_COMBO_START,
+    payload: comboId,
+});
 
-// export const getcomboByIdSuccess = (comboId) => ({
-//     type: types.GET_COMBO_BYID_SUCCESS,
-//     payload: comboId,
-// });
+export const getcomboByIdSuccess = (comboId) => ({
+    type: types.GET_SINGLE_COMBO_SUCCESS,
+    payload: comboId,
+});
 
-// export const getcomboByIdError = (error) => ({
-//     type: types.GET_COMBO_BYID_ERROR,
-//     payload: error,
-// })
+export const getcomboByIdError = (error) => ({
+    type: types.GET_SINGLE_COMBO_ERROR,
+    payload: error,
+})
+
+export const getItemsByCategoryStart = (items) => ({
+    type: types.GET_ITEMS_BY_CATEGORY_START,
+    payload: items,
+})
+
+export const getItemsByCategorySuccess = (items) => ({
+    type : types.GET_ITEMS_BY_CATEGORY_SUCCESS,
+    payload: items,
+})
+
+export const getItemsByCategoryError = (error) => ({
+    type: types.GET_ITEMS_BY_CATEGORY_ERROR,
+    payload: error,
+})

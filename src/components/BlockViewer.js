@@ -40,7 +40,7 @@ const BlockViewer = (props) => {
                             {props.code}
                         </CodeHighlight>
                     }
-                </div>
+                </div> 
             </div>
         </div>
     )

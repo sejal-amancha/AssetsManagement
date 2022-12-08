@@ -32,7 +32,9 @@ import AddUser from '../pages/EditComponent/AddUser';
 import AddEditCategory from '../pages/EditComponent/AddEditCategory';
 import AddEditDepartment from '../pages/EditComponent/AddEditDepartment';
 import Department from '../pages/SingleViews/Department';
-import AddUpdateAssignment from '../pages/EditComponent/AddUpdateAssignment';
+import Combos from './menu/Combos';
+import AddAssignment from '../pages/EditComponent/AddAssignment';
+import Combo from '../pages/SingleViews/Combo';
 
 
 const AdminDashboard = () => {
@@ -136,6 +138,7 @@ const AdminDashboard = () => {
                 { label: 'DEPARTMENTS', icon: 'pi pi-fw pi-tag', to: '/admindashboard/departments' } ,
                 { label: 'EMPLOYEES INFO', icon: 'pi pi-fw pi-users' , to: '/admindashboard/employees' },
                 { label: 'ASSETS INFO', icon: 'pi pi-fw pi-id-card', to: '/admindashboard/assets' },
+                { label: 'COMBO INFO', icon: 'pi pi-fw pi-th-large', to: '/admindashboard/combos' },
             ]
         },
     ];
@@ -180,8 +183,9 @@ const AdminDashboard = () => {
                     <Route path="/admindashboard/categories" component={Categories} />
                     <Route path="/admindashboard/departments" component={Departments} />
                     <Route path="/admindashboard/assets" component={Products} />
+                    <Route path="/admindashboard/combos" component={Combos} />
                     <Route path="/admindashboard/asset-assignment" component={Allocations} />
-                    <Route path="/nksjhduihiofnrklcnmf/:uniqueId" component={Employee} />
+                    <Route path="/employee/:id" component={Employee} />
                     <Route path="/category/:id" component={Category} />
                     <Route path="/department/:id" component={Department} />
                     <Route path="/asset/:id" component={Product} />
@@ -193,8 +197,9 @@ const AdminDashboard = () => {
                     <Route path="/update-category/:id" component={AddEditCategory} />
                     <Route path="/addnew-department" component={AddEditDepartment} />
                     <Route path="/update-department/:id" component={AddEditDepartment} />
-                    <Route path="/new-assignment/:id" component={AddUpdateAssignment} />
-                    <Route path="/new-assets-assign/:id" component={AddUpdateAssignment}  />
+                    <Route path="/addnew-combo" component={AddAssignment} />
+                    <Route path="/combo/:id" component={Combo} />
+                    <Route path="/update-combo/:id" component={AddAssignment} />
                 </div>
 
                 <AppFooter  />

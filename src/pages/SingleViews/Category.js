@@ -36,6 +36,7 @@ const Category = () => {
             </React.Fragment>
         )
     }
+    
     const gotoPrevious = () => {
         history.goBack();
     }
@@ -52,10 +53,10 @@ const Category = () => {
                     <div className="text-500 text-2xl w-6 md:w-3 font-medium">Name</div>
                     <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{categorySingle?.categoryName}</div>
                 </li>
-                <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
+                {/* <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                     <div className="text-500 text-2xl w-6 md:w-3 font-medium">Description</div>
                     <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{categorySingle?.description}</div>
-                </li>
+                </li> */}
                 <li className="flex align-items-center py-5 px-8 border-top-1 surface-border flex-wrap">
                     <div className="text-500 text-2xl w-6 md:w-3 font-medium">Status</div>
                     <div className="text-900 text-2xl w-full md:w-8 md:flex-order-0 flex-order-1">{status}</div>
